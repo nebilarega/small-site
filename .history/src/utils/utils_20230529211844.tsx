@@ -38,8 +38,6 @@ export function createBoundingBoxHelper(
 ) {
   removeExistingBoundingBox(scene);
   const box = new THREE.Box3().setFromObject(object);
-  const boxCenter = new THREE.Vector3();
-  box.getCenter(boxCenter);
   const textureLoader = new THREE.TextureLoader();
 
   const vertices = [
@@ -54,8 +52,8 @@ export function createBoundingBoxHelper(
   ];
 
   if (type) {
-    const twelveInch = textureLoader.load("/15 inches.png");
-    const fifteenInch = textureLoader.load("/12 inches.png");
+    const twelveInch = textureLoader.load("/12 inches.png");
+    const fifteenInch = textureLoader.load("/15 inches.png");
     const eighteenInch = textureLoader.load("/18 inches.png");
 
     const planeGeometry = new THREE.PlaneGeometry(0.3, 0.08);
@@ -105,17 +103,15 @@ export function createBoundingBoxHelper(
       .multiplyScalar(0.5)
       .add(new THREE.Vector3(0, 0.08 / 2));
     const eighteenPosition = new THREE.Vector3();
-    eighteenPosition.copy(boxCenter);
-    // eighteenPosition.addVectors(
-    //   box.max,
-    //   new THREE.Vector3(box.max.x, box.min.y, box.min.z).multiplyScalar(0.5)
-    // );
+    eighteenPosition.addVectors(
+      box.max,
+      new THREE.Vector3(box.max.x, box.min.y, box.min.z).multiplyScalar(0.5)
+    );
 
     twelvePlane.position.copy(twelvePosition);
     fifteenPlane.position.copy(fifteenPosition);
     fifteenPlane.rotateY(-Math.PI / 2);
     eighteenPlane.position.copy(eighteenPosition);
-    eighteenPlane.rotateY(-Math.PI / 4);
 
     const infoGroup = new THREE.Group();
     infoGroup.name = "informationGroup";

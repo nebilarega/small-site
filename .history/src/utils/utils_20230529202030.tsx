@@ -38,8 +38,6 @@ export function createBoundingBoxHelper(
 ) {
   removeExistingBoundingBox(scene);
   const box = new THREE.Box3().setFromObject(object);
-  const boxCenter = new THREE.Vector3();
-  box.getCenter(boxCenter);
   const textureLoader = new THREE.TextureLoader();
 
   const vertices = [
@@ -54,34 +52,31 @@ export function createBoundingBoxHelper(
   ];
 
   if (type) {
-    const twelveInch = textureLoader.load("/15 inches.png");
-    const fifteenInch = textureLoader.load("/12 inches.png");
+    const twelveInch = textureLoader.load("/12 inches.png");
+    const fifteenInch = textureLoader.load("/15 inches.png");
     const eighteenInch = textureLoader.load("/18 inches.png");
 
     const planeGeometry = new THREE.PlaneGeometry(0.3, 0.08);
 
     const twelvePlane = new THREE.Mesh(
-      planeGeometry.clone(),
+      planeGeometry,
       new THREE.MeshStandardMaterial({
-        map: twelveInch,
         side: THREE.DoubleSide,
         depthTest: false,
       })
     );
     const fifteenPlane = new THREE.Mesh(
-      planeGeometry.clone(),
+      planeGeometry,
       new THREE.MeshStandardMaterial({
         map: fifteenInch,
-        side: THREE.DoubleSide,
-        depthTest: false,
+        color: "black",
       })
     );
     const eighteenPlane = new THREE.Mesh(
-      planeGeometry.clone(),
+      planeGeometry,
       new THREE.MeshStandardMaterial({
         map: eighteenInch,
-        side: THREE.DoubleSide,
-        depthTest: false,
+        color: "black",
       })
     );
     // const twelvePosition = new THREE.Vector3();
@@ -89,40 +84,38 @@ export function createBoundingBoxHelper(
     //   box.min,
     //   new THREE.Vector3(box.max.x, box.min.y, box.min.z).multiplyScalar(0.5)
     // ); // Vertex 0
+    let center = new THREE.Vector3();
+    for (const vertex of vertices) {
+      center.add(vertex);
+    }
+    center.divideScalar(vertices.length);
+    const twelvePosition = new THREE.Vector3().copy(center);
 
-    const twelvePosition = new THREE.Vector3();
-    twelvePosition
-      .addVectors(box.min, new THREE.Vector3(box.max.x, box.min.y, box.min.z))
-      .multiplyScalar(0.5)
-      .add(new THREE.Vector3(0, 0.08 / 2));
-
+    twelvePlane.position.set(
+      twelvePosition.x,
+      twelvePosition.y,
+      twelvePosition.z
+    );
+    createBoundingBox(twelvePlane, 0xff0000, scene);
     const fifteenPosition = new THREE.Vector3();
-    fifteenPosition
-      .addVectors(
-        new THREE.Vector3(box.max.x, box.min.y, box.min.z),
-        new THREE.Vector3(box.max.x, box.min.y, box.max.z)
-      )
-      .multiplyScalar(0.5)
-      .add(new THREE.Vector3(0, 0.08 / 2));
+    fifteenPosition.addVectors(
+      box.min,
+      new THREE.Vector3(box.max.x, box.min.y, box.min.z).multiplyScalar(0.5)
+    ); // Vertex 0
+
+    twelvePlane.position.copy(fifteenPosition);
+    twelvePlane.rotateY(Math.PI / 2);
     const eighteenPosition = new THREE.Vector3();
-    eighteenPosition.copy(boxCenter);
-    // eighteenPosition.addVectors(
-    //   box.max,
-    //   new THREE.Vector3(box.max.x, box.min.y, box.min.z).multiplyScalar(0.5)
-    // );
+    eighteenPosition.addVectors(
+      box.max,
+      new THREE.Vector3(box.max.x, box.min.y, box.min.z).multiplyScalar(0.5)
+    ); // Vertex 0
 
-    twelvePlane.position.copy(twelvePosition);
-    fifteenPlane.position.copy(fifteenPosition);
-    fifteenPlane.rotateY(-Math.PI / 2);
-    eighteenPlane.position.copy(eighteenPosition);
-    eighteenPlane.rotateY(-Math.PI / 4);
-
-    const infoGroup = new THREE.Group();
-    infoGroup.name = "informationGroup";
-    infoGroup.add(twelvePlane, fifteenPlane, eighteenPlane);
+    twelvePlane.position.copy(eighteenPosition);
+    // infoGroup.add(twelvePlane);
     // infoGroup.position.copy(object.position.clone());
 
-    scene.add(infoGroup);
+    scene.add(twelvePlane);
   }
 
   const edges = [
@@ -150,6 +143,7 @@ export function createBoundingBoxHelper(
   const geometry = new THREE.BufferGeometry();
   const newGeometry = new LineGeometry();
   const verticesArray = new Float32Array(edges.length * 2 * 3);
+  const verticesArray2 = new Float32Array(edge2.length * 2 * 3);
 
   for (let i = 0; i < edges.length; i++) {
     const edge = edges[i];
@@ -196,6 +190,6 @@ export function removeExistingBoundingBox(scene: THREE.Scene) {
     scene.remove(existingBoundingBox);
   }
   if (existingInformation) {
-    scene.remove(existingInformation);
+    // scene.remove(existingInformation);
   }
 }

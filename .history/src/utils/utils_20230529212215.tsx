@@ -54,8 +54,8 @@ export function createBoundingBoxHelper(
   ];
 
   if (type) {
-    const twelveInch = textureLoader.load("/15 inches.png");
-    const fifteenInch = textureLoader.load("/12 inches.png");
+    const twelveInch = textureLoader.load("/12 inches.png");
+    const fifteenInch = textureLoader.load("/15 inches.png");
     const eighteenInch = textureLoader.load("/18 inches.png");
 
     const planeGeometry = new THREE.PlaneGeometry(0.3, 0.08);
