@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Model } from "./Model";
 import { NonCanvas } from "./NonCanvas";
@@ -7,6 +7,8 @@ import { HiOutlineZoomIn } from "react-icons/hi";
 import { HiOutlineZoomOut } from "react-icons/hi";
 import { BiRotateLeft } from "react-icons/bi";
 import { BiRotateRight } from "react-icons/bi";
+import Information from "./Information";
+import Fallback from "./Fallback";
 
 interface TransformState {
   transformState:
@@ -46,40 +48,40 @@ export const Organize = () => {
   return (
     <div style={{ width: "100%", height: "100vh", position: "relative" }}>
       {/** @ts-ignore */}
-      <Canvas shadows={true} shadowMapType={THREE.PCFSoftShadowMap}>
-        {/* <OrbitControls minDistance={0.5} maxDistance={5.1} /> */}
-        <fog attach="fog" args={["#ffffff", 0, 20]} />
-        <ambientLight />
-
-        {/* <Environment
-          files={"./enviroment.674b683b6702c9423a03.hdr"}
-          background
-        /> */}
-        <Model />
-        <NonCanvas
-          setCloseVisible={setCloseVisible}
-          closeClicked={closeClicked}
-          setCloseClicked={setCloseClicked}
+      <Suspense fallback={<Fallback />}>
+        <Canvas shadows={true}>
+          <fog attach="fog" args={["#ffffff", 0, 20]} />
+          <ambientLight />
+          <Model />
+          {/* <gridHelper args={[100, 800]} position={[0, -0.5, 0]} /> */}
+          <NonCanvas
+            setCloseVisible={setCloseVisible}
+            closeClicked={closeClicked}
+            setCloseClicked={setCloseClicked}
+            transformState={transformState}
+            setTransformState={setTransformState}
+            setViewButtonState={setViewButtonState}
+            viewButtonState={viewButtonState}
+          />
+        </Canvas>
+      </Suspense>
+      <div>
+        {closeVisible && (
+          <CloseButton
+            setCloseClicked={setCloseClicked}
+            setCloseVisible={setCloseVisible}
+          />
+        )}
+        <TransformationButtons
           transformState={transformState}
           setTransformState={setTransformState}
-          setViewButtonState={setViewButtonState}
+        />
+        <ViewButtons
           viewButtonState={viewButtonState}
+          setViewButtonState={setViewButtonState}
         />
-      </Canvas>
-      {closeVisible && (
-        <CloseButton
-          setCloseClicked={setCloseClicked}
-          setCloseVisible={setCloseVisible}
-        />
-      )}
-      <TransformationButtons
-        transformState={transformState}
-        setTransformState={setTransformState}
-      />
-      <ViewButtons
-        viewButtonState={viewButtonState}
-        setViewButtonState={setViewButtonState}
-      />
+        <Information />
+      </div>
     </div>
   );
 };

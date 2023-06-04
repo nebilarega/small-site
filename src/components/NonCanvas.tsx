@@ -95,30 +95,67 @@ export const NonCanvas: React.FC<Props> = ({
   roughnessMap.wrapS = roughnessMap.wrapT = THREE.RepeatWrapping;
   roughnessMap.repeat.set(repeatX, repeatY);
 
-  const { camera, scene, raycaster, mouse, gl } = useThree();
+  const { camera, scene, raycaster, mouse, gl, size } = useThree();
+  const previousMousePosition = useRef<[number, number]>([mouse.x, mouse.y]);
   const [enableOrbitControl, setEnableOrbitControl] = useState(true);
   const originalPosition = useRef(camera.position.clone());
   const originalRotation = useRef(camera.rotation.clone());
   const originalFOV = useRef((camera as THREE.PerspectiveCamera).fov);
 
+  const resetCamera = () => {
+    new TWEEN.Tween(camera.position)
+      .to(originalPosition.current, 500) // Set the duration of the animation in milliseconds
+      .easing(TWEEN.Easing.Quadratic.InOut) // Set the easing function for the animation
+      //   .onUpdate(() => {
+      //     camera.position.copy(startPosition);
+      //     camera.lookAt(intersects[0].point);
+      //   })
+      .start();
+    //   camera.position.copy(originalPosition.current);
+    new TWEEN.Tween(camera.rotation)
+      .to(
+        {
+          x: originalRotation.current.x,
+          y: originalRotation.current.y,
+          z: originalRotation.current.z,
+        },
+        1000
+      )
+      .easing(TWEEN.Easing.Quadratic.InOut)
+      .start();
+
+    // camera.rotation.copy(originalRotation.current);
+    (camera as THREE.PerspectiveCamera).fov = originalFOV.current;
+    camera.updateProjectionMatrix();
+  };
+
   useEffect(() => {
     if (closeClicked) {
-      new TWEEN.Tween(camera.position)
-        .to(originalPosition.current, 1000) // Set the duration of the animation in milliseconds
-        .easing(TWEEN.Easing.Quadratic.InOut) // Set the easing function for the animation
-        //   .onUpdate(() => {
-        //     camera.position.copy(startPosition);
-        //     camera.lookAt(intersects[0].point);
-        //   })
-        .start();
-      //   camera.position.copy(originalPosition.current);
-      camera.rotation.copy(originalRotation.current);
-      (camera as THREE.PerspectiveCamera).fov = originalFOV.current;
-      camera.updateProjectionMatrix();
-      setCloseClicked(false);
+      resetCamera();
       removeExistingBoundingBox(scene);
+      setCloseClicked(false);
     }
   }, [closeClicked]);
+
+  const cameraRotation = (state: "clockwise" | "counterclockwise") => {
+    const cameraPosition = camera.position.clone();
+    const spherical = new THREE.Spherical().setFromVector3(cameraPosition);
+    const scale = state === "clockwise" ? -0.4 : 0.4;
+    spherical.theta -= scale;
+    spherical.phi += 0;
+    const targetPosition = new THREE.Vector3().setFromSpherical(spherical);
+    // spherical.phi = Math.max(0, Math.min(Math.PI, spherical.phi));
+    new TWEEN.Tween(camera.position);
+    // .to(
+    //   { x: targetPosition.x, y: targetPosition.y, z: targetPosition.z },
+    //   100
+    // )
+    // .easing(TWEEN.Easing.Linear.None)
+    // .start();
+
+    camera.position.setFromSpherical(spherical);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+  };
 
   useEffect(() => {
     if (transformState) {
@@ -132,8 +169,10 @@ export const NonCanvas: React.FC<Props> = ({
             (camera as THREE.PerspectiveCamera).fov += 5;
           break;
         case "clockwise":
+          cameraRotation("clockwise");
           break;
         case "counterclockwise":
+          cameraRotation("counterclockwise");
           break;
       }
       setTransformState(null);
@@ -142,8 +181,10 @@ export const NonCanvas: React.FC<Props> = ({
 
   useEffect(() => {
     if (viewButtonState) {
+      setCloseVisible(false);
       switch (viewButtonState) {
         case "front":
+          resetCamera();
           new TWEEN.Tween(camera.position)
             .to(new THREE.Vector3(0, 0, 3), 1000) // Set the duration of the animation in milliseconds
             .easing(TWEEN.Easing.Quadratic.InOut) // Set the easing function for the animation
@@ -155,6 +196,7 @@ export const NonCanvas: React.FC<Props> = ({
           camera.rotation.copy(new THREE.Euler(0, 0, 0));
           break;
         case "top":
+          resetCamera();
           new TWEEN.Tween(camera.position)
             .to(new THREE.Vector3(0, 4, 0), 1000) // Set the duration of the animation in milliseconds
             .easing(TWEEN.Easing.Quadratic.InOut) // Set the easing function for the animation
@@ -163,9 +205,19 @@ export const NonCanvas: React.FC<Props> = ({
             //     camera.lookAt(intersects[0].point);
             //   })
             .start();
-          camera.rotation.copy(new THREE.Euler(0, Math.PI / 2, 0));
+          new TWEEN.Tween(camera.rotation)
+            .to({ x: -Math.PI / 2, y: 0, z: 0 }, 1000)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .start();
+          // .onUpdate(() => {
+          //   camera.rotation.x = oldRot.x;
+          //   camera.rotation.y = oldRot.y;
+          //   camera.rotation.z = oldRot.z;
+          // });
+          // camera.rotation.copy(new THREE.Euler(-Math.PI / 2, 0, 0));
           break;
         case "left":
+          resetCamera();
           new TWEEN.Tween(camera.position)
             .to(new THREE.Vector3(-3.4, 0, 0), 1000) // Set the duration of the animation in milliseconds
             .easing(TWEEN.Easing.Quadratic.InOut) // Set the easing function for the animation
@@ -174,7 +226,10 @@ export const NonCanvas: React.FC<Props> = ({
             //     camera.lookAt(intersects[0].point);
             //   })
             .start();
-          camera.rotation.copy(new THREE.Euler(0, 0, 0));
+          new TWEEN.Tween(camera.rotation)
+            .to({ x: 0, y: -Math.PI / 2, z: 0 }, 1000)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .start();
           break;
         case "bird":
         default:
@@ -187,7 +242,17 @@ export const NonCanvas: React.FC<Props> = ({
             //   })
             .start();
           //   camera.position.copy(originalPosition.current);
-          camera.rotation.copy(originalRotation.current);
+          new TWEEN.Tween(camera.rotation)
+            .to(
+              {
+                x: originalRotation.current.x,
+                y: originalRotation.current.y,
+                z: originalRotation.current.z,
+              },
+              1000
+            )
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .start();
           (camera as THREE.PerspectiveCamera).fov = originalFOV.current;
           camera.updateProjectionMatrix();
       }
@@ -269,45 +334,96 @@ export const NonCanvas: React.FC<Props> = ({
     setEnableOrbitControl(enableOrbitControl);
     isDomDragged = false;
     isMovable = true;
+    previousMousePosition.current = [mouse.x, mouse.y];
   };
-  const handleMouseMove = (event: Event) => {
+  const handleMouseMove = (event: MouseEvent) => {
     isDomDragged = true;
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObjects(scene.children, true);
-    const mouseX = mouse.x;
     if (isMovable) {
       removeExistingBoundingBox(scene);
-      if (intersects.length > 0) {
+      if (
+        intersects.length > 0 &&
+        !["Stand", "Barb", "floor"].includes(intersects[0].object.name)
+      ) {
         const int_obj = intersects[0].object;
-        if (!["Stand", "Barb"].includes(int_obj.name)) {
-          // createBoundingBox(int_obj);
-          const parent = int_obj.parent;
-          if (parent) {
-            const collectionName = Object.keys(collections).find((value) =>
-              parent.name.includes(value)
-            );
-            if (collectionName) {
-              const value =
-                collections[collectionName as keyof typeof collections];
+        // createBoundingBox(int_obj);
+        const parent = int_obj.parent;
+        if (parent) {
+          const collectionName = Object.keys(collections).find((value) =>
+            parent.name.includes(value)
+          );
+          if (collectionName) {
+            const value =
+              collections[collectionName as keyof typeof collections];
 
-              const mapVal = maps[collectionName as keyof typeof maps];
-              if (mapVal.position.x < mapVal.max) {
-                value.forEach((groupName) => {
-                  const obj = scene.getObjectByName(groupName);
-                  console.log(obj?.position);
-                  if (obj?.position) {
-                    obj.position.x += 0.02;
+            const mapVal = maps[collectionName as keyof typeof maps];
+            const pointIntersect = intersects[0].point.x;
+            if (
+              mapVal.position &&
+              (mapVal.position.x < mapVal.max || mapVal.position.x > mapVal.min)
+            ) {
+              value.forEach((groupName) => {
+                const obj = scene.getObjectByName(groupName);
+                if (obj?.position) {
+                  if (
+                    pointIntersect > obj.position.x &&
+                    mapVal.position.x < mapVal.max
+                  ) {
+                    if (mapVal.left) {
+                      const left = maps[mapVal.left as keyof typeof maps];
+                      left.max = obj.position.x - 0.5;
+                    }
+                    obj.position.x = pointIntersect;
+                  } else if (
+                    pointIntersect < obj.position.x &&
+                    mapVal.position.x > mapVal.min
+                  ) {
+                    if (mapVal.right) {
+                      const right = maps[mapVal.right as keyof typeof maps];
+                      right.min = obj.position.x + 0.5;
+                    }
+                    obj.position.x = pointIntersect;
                   }
-                });
-                mapVal.position.x += 0.02;
-                if (mapVal.left) {
-                  const left = maps[mapVal.left as keyof typeof maps];
-                  left.max += 0.02;
+                  // if (obj.position.x >= mapVal.max)
+                  //   obj.position.x = pointIntersect;
                 }
-              }
+              });
+              mapVal.position.x = pointIntersect;
+              // if (mapVal.right) {
+              //   if (mapVal.max <= pointIntersect){
+
+              //   }
+              // }
+
+              // if (mapVal.left) {
+              //   const left = maps[mapVal.left as keyof typeof maps];
+              //   left.max += 0.02;
+              // }
             }
           }
         }
+      } else if (
+        intersects.length === 0 ||
+        ["floor"].includes(intersects[0].object.name)
+      ) {
+        // camera.rotation.y -= event.movementX * 0.001 * 10;
+        // camera.rotation.x -= event.movementY * 0.001 * 10;
+        // camera.position.x = -5 * Math.sin(-event.clientX * 0.1);
+        // camera.position.z = -5 * Math.cos(-event.clientX * 0.1);
+        // camera.lookAt(new THREE.Vector3(0, 0, 0));
+        const [prevX, prevY] = previousMousePosition.current;
+        const cameraPosition = camera.position.clone();
+        const cameraRadius = cameraPosition.length();
+        const spherical = new THREE.Spherical().setFromVector3(cameraPosition);
+        spherical.theta -= (mouse.x - prevX) * 1.5;
+        spherical.phi += (mouse.y - prevY) * 1.5;
+
+        spherical.phi = Math.max(0, Math.min(Math.PI / 2, spherical.phi));
+
+        camera.position.setFromSpherical(spherical);
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+        previousMousePosition.current = [mouse.x, mouse.y];
       }
     } else {
       isMovable = false;
@@ -350,6 +466,7 @@ export const NonCanvas: React.FC<Props> = ({
     };
   }, [gl]);
 
+  const rotateAroundObject = () => {};
   return (
     <group>
       <directionalLight
@@ -381,14 +498,14 @@ export const NonCanvas: React.FC<Props> = ({
           normalMap={normalMap}
         />
       </mesh>
-      {enableOrbitControl && (
+      {/* {enableOrbitControl && (
         <OrbitControls
           enableDamping={false}
           minDistance={1}
           maxDistance={5.1}
           maxPolarAngle={Math.PI / 2}
         />
-      )}
+      )} */}
     </group>
   );
 };
