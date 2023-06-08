@@ -29,6 +29,55 @@ export function createBoundingBox(
 //     return bboxHelper;
 //   }
 
+export function hideBlocks(block_id: string, scene: THREE.Scene) {
+  if (block_id.includes("SC_1")) {
+    const block = ["SC_11", "SC_12", "SC_13"];
+    block.forEach((cell_id) => {
+      const cell = collections[cell_id as keyof typeof collections];
+      cell.forEach((cell_block) => {
+        const cell_block_ = scene.getObjectByName(cell_block);
+        if (cell_block_) {
+          cell_block_.visible = false;
+        }
+      });
+    });
+  } else if (block_id.includes("SC_2")) {
+    const block = ["SC_21", "SC_22", "SC_23", "SC_24"];
+    block.forEach((cell_id) => {
+      const cell = collections[cell_id as keyof typeof collections];
+      cell.forEach((cell_block) => {
+        const cell_block_ = scene.getObjectByName(cell_block);
+        if (cell_block_) {
+          cell_block_.visible = false;
+        }
+      });
+    });
+  }
+}
+
+export function viewBlocks(scene: THREE.Scene) {
+  // maybe inefficeint
+  const block = [
+    "SC_21",
+    "SC_22",
+    "SC_23",
+    "SC_24",
+    "SC_11",
+    "SC_12",
+    "SC_13",
+    // "SC_14",
+  ];
+  block.forEach((cell_id) => {
+    const cell = collections[cell_id as keyof typeof collections];
+    cell.forEach((cell_block) => {
+      const cell_block_ = scene.getObjectByName(cell_block);
+      if (cell_block_) {
+        cell_block_.visible = true;
+      }
+    });
+  });
+}
+
 export function createBoundingBoxHelper(
   object: THREE.Object3D,
   color: number | string,

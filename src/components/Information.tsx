@@ -8,7 +8,7 @@ const Information = () => {
         top: "10%",
         right: "1%",
         backgroundColor: "white",
-        padding: "0.5rem 1rem 0.5rem 0",
+        padding: "0.5rem 0.8rem 0.5rem 0",
         boxShadow: "0 0 3x #ccc",
         borderRadius: "10px",
       }}
@@ -17,7 +17,7 @@ const Information = () => {
         <div
           className="title"
           style={{
-            fontSize: "1.5rem",
+            fontSize: "1.3rem",
             fontWeight: "600",
             paddingLeft: "1rem",
             textAlign: "start",
@@ -25,7 +25,9 @@ const Information = () => {
         >
           Rack Dimensions
         </div>
-        <ul style={{ textAlign: "start", fontSize: "1rem", fontWeight: "500" }}>
+        <ul
+          style={{ textAlign: "start", fontSize: "0.8rem", fontWeight: "500" }}
+        >
           <li>inner height: 91.0in</li>
           <li>inner depth: 36.5in</li>
           <li>inner with: 96.0in</li>
@@ -36,7 +38,7 @@ const Information = () => {
         <div
           className="title"
           style={{
-            fontSize: "1.5rem",
+            fontSize: "1.3rem",
             fontWeight: "600",
             paddingLeft: "1rem",
             textAlign: "start",
@@ -44,7 +46,9 @@ const Information = () => {
         >
           Pocket in row (rear)
         </div>
-        <ul style={{ textAlign: "start", fontSize: "1rem", fontWeight: "500" }}>
+        <ul
+          style={{ textAlign: "start", fontSize: "0.8rem", fontWeight: "500" }}
+        >
           <li>height: 6.0in</li>
           <li>depth: 10.5in</li>
           <li>width: 12.0in</li>
@@ -56,7 +60,7 @@ const Information = () => {
         <div
           className="title"
           style={{
-            fontSize: "1.5rem",
+            fontSize: "1.3rem",
             fontWeight: "600",
             paddingLeft: "1rem",
             textAlign: "start",
@@ -64,7 +68,9 @@ const Information = () => {
         >
           Pocket in row 2
         </div>
-        <ul style={{ textAlign: "start", fontSize: "1rem", fontWeight: "500" }}>
+        <ul
+          style={{ textAlign: "start", fontSize: "0.8rem", fontWeight: "500" }}
+        >
           <li>height: 6.0in</li>
           <li>depth: 10.5in</li>
           <li>width: 12.0in</li>
@@ -76,7 +82,7 @@ const Information = () => {
         <div
           className="title"
           style={{
-            fontSize: "1.5rem",
+            fontSize: "1.3rem",
             fontWeight: "600",
             paddingLeft: "1rem",
             textAlign: "start",
@@ -84,7 +90,9 @@ const Information = () => {
         >
           Pocket in row 3
         </div>
-        <ul style={{ textAlign: "start", fontSize: "1rem", fontWeight: "500" }}>
+        <ul
+          style={{ textAlign: "start", fontSize: "0.8rem", fontWeight: "500" }}
+        >
           <li>height: 6.0in</li>
           <li>depth: 10.5in</li>
           <li>width: 12.0in</li>

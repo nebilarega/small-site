@@ -13,7 +13,9 @@ import { OrbitControls } from "@react-three/drei";
 import TWEEN from "@tweenjs/tween.js";
 import {
   createBoundingBoxHelper,
+  hideBlocks,
   removeExistingBoundingBox,
+  viewBlocks,
 } from "../utils/utils";
 import { collections, maps } from "../assets/data";
 
@@ -134,6 +136,7 @@ export const NonCanvas: React.FC<Props> = ({
       resetCamera();
       removeExistingBoundingBox(scene);
       setCloseClicked(false);
+      viewBlocks(scene);
     }
   }, [closeClicked]);
 
@@ -289,6 +292,13 @@ export const NonCanvas: React.FC<Props> = ({
               scene,
               "clicked"
             );
+            if (int_obj.parent.name.includes("SC_2")) {
+              hideBlocks("SC_1", scene);
+            }
+            if (int_obj.parent.name.includes("SC_3")) {
+              hideBlocks("SC_1", scene);
+              hideBlocks("SC_2", scene);
+            }
             setEnableOrbitControl(false);
             // createBoundingBox(int_obj.parent, 0xff0000, scene);
             // camera.lookAt(
@@ -466,7 +476,6 @@ export const NonCanvas: React.FC<Props> = ({
     };
   }, [gl]);
 
-  const rotateAroundObject = () => {};
   return (
     <group>
       <directionalLight
@@ -498,14 +507,6 @@ export const NonCanvas: React.FC<Props> = ({
           normalMap={normalMap}
         />
       </mesh>
-      {/* {enableOrbitControl && (
-        <OrbitControls
-          enableDamping={false}
-          minDistance={1}
-          maxDistance={5.1}
-          maxPolarAngle={Math.PI / 2}
-        />
-      )} */}
     </group>
   );
 };
