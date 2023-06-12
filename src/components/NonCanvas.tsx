@@ -99,10 +99,10 @@ export const NonCanvas: React.FC<Props> = ({
 
   const { camera, scene, raycaster, mouse, gl, size } = useThree();
   const previousMousePosition = useRef<[number, number]>([mouse.x, mouse.y]);
-  const [enableOrbitControl, setEnableOrbitControl] = useState(true);
   const originalPosition = useRef(camera.position.clone());
   const originalRotation = useRef(camera.rotation.clone());
   const originalFOV = useRef((camera as THREE.PerspectiveCamera).fov);
+  const currentObject = useRef<THREE.Object3D | null>(null);
 
   const resetCamera = () => {
     new TWEEN.Tween(camera.position)
@@ -299,7 +299,6 @@ export const NonCanvas: React.FC<Props> = ({
               hideBlocks("SC_1", scene);
               hideBlocks("SC_2", scene);
             }
-            setEnableOrbitControl(false);
             // createBoundingBox(int_obj.parent, 0xff0000, scene);
             // camera.lookAt(
             //   int_obj.parent.position.add(
@@ -336,15 +335,17 @@ export const NonCanvas: React.FC<Props> = ({
       isDomDragged = false;
     }
   };
-  const handleDomDragStart = (event: Event) => {
+  const handleMouseDown = (event: Event) => {
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObjects(scene.children, true);
-    const enableOrbitControl =
-      intersects.length === 0 || intersects[0].object.name === "floor";
-    setEnableOrbitControl(enableOrbitControl);
+    if (intersects.length > 0) {
+      currentObject.current = intersects[0].object;
+    }
     isDomDragged = false;
     isMovable = true;
     previousMousePosition.current = [mouse.x, mouse.y];
+    const cursor = document.getElementById("content__container");
+    if (cursor) cursor!.style.cursor = "pointer";
   };
   const handleMouseMove = (event: MouseEvent) => {
     isDomDragged = true;
@@ -353,10 +354,10 @@ export const NonCanvas: React.FC<Props> = ({
     if (isMovable) {
       removeExistingBoundingBox(scene);
       if (
-        intersects.length > 0 &&
-        !["Stand", "Barb", "floor"].includes(intersects[0].object.name)
+        currentObject.current &&
+        !["Stand", "Barb", "floor"].includes(currentObject.current.name)
       ) {
-        const int_obj = intersects[0].object;
+        const int_obj = currentObject.current;
         // createBoundingBox(int_obj);
         const parent = int_obj.parent;
         if (parent) {
@@ -368,10 +369,13 @@ export const NonCanvas: React.FC<Props> = ({
               collections[collectionName as keyof typeof collections];
 
             const mapVal = maps[collectionName as keyof typeof maps];
-            const pointIntersect = intersects[0].point.x;
+            const pointIntersect =
+              intersects.length > 0 && intersects[0].point.x;
             if (
               mapVal.position &&
-              (mapVal.position.x < mapVal.max || mapVal.position.x > mapVal.min)
+              (mapVal.position.x < mapVal.max ||
+                mapVal.position.x > mapVal.min) &&
+              pointIntersect
             ) {
               value.forEach((groupName) => {
                 const obj = scene.getObjectByName(groupName);
@@ -382,7 +386,7 @@ export const NonCanvas: React.FC<Props> = ({
                   ) {
                     if (mapVal.left) {
                       const left = maps[mapVal.left as keyof typeof maps];
-                      left.max = obj.position.x - 0.5;
+                      left.max = obj.position.x - 0.48;
                     }
                     obj.position.x = pointIntersect;
                   } else if (
@@ -391,7 +395,7 @@ export const NonCanvas: React.FC<Props> = ({
                   ) {
                     if (mapVal.right) {
                       const right = maps[mapVal.right as keyof typeof maps];
-                      right.min = obj.position.x + 0.5;
+                      right.min = obj.position.x + 0.49;
                     }
                     obj.position.x = pointIntersect;
                   }
@@ -415,7 +419,8 @@ export const NonCanvas: React.FC<Props> = ({
         }
       } else if (
         intersects.length === 0 ||
-        ["floor"].includes(intersects[0].object.name)
+        (currentObject.current &&
+          ["floor"].includes(currentObject.current.name))
       ) {
         // camera.rotation.y -= event.movementX * 0.001 * 10;
         // camera.rotation.x -= event.movementY * 0.001 * 10;
@@ -460,16 +465,19 @@ export const NonCanvas: React.FC<Props> = ({
   };
   const handleMouseUp = (event: Event) => {
     isMovable = false;
+    currentObject.current = null;
+    const cursor = document.getElementById("content__container");
+    if (cursor) cursor!.style.cursor = "default";
   };
 
   useEffect(() => {
-    gl.domElement.addEventListener("mousedown", handleDomDragStart);
+    gl.domElement.addEventListener("mousedown", handleMouseDown);
     gl.domElement.addEventListener("mousemove", handleMouseMove);
     gl.domElement.addEventListener("mouseup", handleMouseUp);
     gl.domElement.addEventListener("click", handleDomClick);
 
     return () => {
-      gl.domElement.removeEventListener("mousedown", handleDomDragStart);
+      gl.domElement.removeEventListener("mousedown", handleMouseDown);
       gl.domElement.removeEventListener("mousemove", handleMouseMove);
       gl.domElement.removeEventListener("mouseup", handleMouseUp);
       gl.domElement.removeEventListener("click", handleDomClick);

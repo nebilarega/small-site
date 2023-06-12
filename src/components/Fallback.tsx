@@ -3,7 +3,7 @@ import "../supense.css";
 
 const Fallback = () => {
   return (
-    <div className="content__container">
+    <div id="content__container" className="content__container">
       <div className="content">
         <div className="ball red"></div>
         <div className="ball green"></div>
