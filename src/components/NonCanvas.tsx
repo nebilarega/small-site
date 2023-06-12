@@ -17,7 +17,7 @@ import {
   removeExistingBoundingBox,
   viewBlocks,
 } from "../utils/utils";
-import { collections, maps } from "../assets/data";
+// import { collections, maps } from "../assets/smallData";
 
 interface Props {
   setCloseVisible: Dispatch<SetStateAction<boolean>>;
@@ -38,6 +38,9 @@ interface Props {
   setViewButtonState: Dispatch<
     SetStateAction<"front" | "top" | "left" | "bird">
   >;
+  modelProps: { modelPath: string; offset: number };
+  collections: any;
+  maps: any;
 }
 
 export const NonCanvas: React.FC<Props> = ({
@@ -48,16 +51,16 @@ export const NonCanvas: React.FC<Props> = ({
   setTransformState,
   viewButtonState,
   setViewButtonState,
+  modelProps,
+  collections,
+  maps,
 }) => {
   const lightRef = useRef<THREE.DirectionalLight>(null);
-  //@ts-ignore
-  useHelper(lightRef.current, THREE.DirectionalLightHelper, "red");
   useFrame(() => {
     TWEEN.update();
   });
   useEffect(() => {
     if (lightRef.current) {
-      //   lightRef.current.lookAt(0, 0, 2.4);
       lightRef.current.shadow.camera.left = -10;
       lightRef.current.shadow.camera.right = 10;
       lightRef.current.shadow.camera.top = 10;
@@ -377,7 +380,7 @@ export const NonCanvas: React.FC<Props> = ({
                 mapVal.position.x > mapVal.min) &&
               pointIntersect
             ) {
-              value.forEach((groupName) => {
+              value.forEach((groupName: any) => {
                 const obj = scene.getObjectByName(groupName);
                 if (obj?.position) {
                   if (
@@ -386,7 +389,7 @@ export const NonCanvas: React.FC<Props> = ({
                   ) {
                     if (mapVal.left) {
                       const left = maps[mapVal.left as keyof typeof maps];
-                      left.max = obj.position.x - 0.48;
+                      left.max = obj.position.x - modelProps.offset;
                     }
                     obj.position.x = pointIntersect;
                   } else if (
@@ -395,7 +398,7 @@ export const NonCanvas: React.FC<Props> = ({
                   ) {
                     if (mapVal.right) {
                       const right = maps[mapVal.right as keyof typeof maps];
-                      right.min = obj.position.x + 0.49;
+                      right.min = obj.position.x + modelProps.offset;
                     }
                     obj.position.x = pointIntersect;
                   }

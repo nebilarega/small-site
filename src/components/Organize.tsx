@@ -9,6 +9,9 @@ import { BiRotateLeft } from "react-icons/bi";
 import { BiRotateRight } from "react-icons/bi";
 import Information from "./Information";
 import Fallback from "./Fallback";
+import { useParams } from "react-router-dom";
+import ModelMap from "../assets/modelMap";
+import DataMap from "../assets/dataMaps";
 
 interface TransformState {
   transformState:
@@ -36,6 +39,10 @@ interface CloseButtonProps {
 }
 
 export const Organize = () => {
+  const { id } = useParams();
+  const modelProps = ModelMap.get(id as string);
+  const dataProps = DataMap.get(id as string);
+
   const [closeVisible, setCloseVisible] = useState(false);
   const [closeClicked, setCloseClicked] = useState(false);
   const [transformState, setTransformState] = useState<
@@ -46,43 +53,50 @@ export const Organize = () => {
   >("bird");
 
   return (
-    <div style={{ width: "100%", height: "100vh", position: "relative" }}>
-      {/** @ts-ignore */}
-      <Suspense fallback={<Fallback />}>
-        <Canvas shadows={true}>
-          <fog attach="fog" args={["#ffffff", 0, 20]} />
-          <ambientLight />
-          <Model />
-          {/* <gridHelper args={[100, 800]} position={[0, -0.5, 0]} /> */}
-          <NonCanvas
-            setCloseVisible={setCloseVisible}
-            closeClicked={closeClicked}
-            setCloseClicked={setCloseClicked}
-            transformState={transformState}
-            setTransformState={setTransformState}
-            setViewButtonState={setViewButtonState}
-            viewButtonState={viewButtonState}
-          />
-        </Canvas>
-      </Suspense>
-      <div>
-        {closeVisible && (
-          <CloseButton
-            setCloseClicked={setCloseClicked}
-            setCloseVisible={setCloseVisible}
-          />
-        )}
-        <TransformationButtons
-          transformState={transformState}
-          setTransformState={setTransformState}
-        />
-        <ViewButtons
-          viewButtonState={viewButtonState}
-          setViewButtonState={setViewButtonState}
-        />
-        <Information />
-      </div>
-    </div>
+    <>
+      {modelProps && (
+        <div style={{ width: "100%", height: "100vh", position: "relative" }}>
+          {/** @ts-ignore */}
+          <Suspense fallback={<Fallback />}>
+            <Canvas shadows={true}>
+              <fog attach="fog" args={["#ffffff", 0, 20]} />
+              <ambientLight />
+              <Model modelPath={modelProps.modelPath} />
+              {/* <gridHelper args={[100, 1000]} position={[0, -0.5, 0]} /> */}
+              <NonCanvas
+                modelProps={modelProps}
+                setCloseVisible={setCloseVisible}
+                closeClicked={closeClicked}
+                setCloseClicked={setCloseClicked}
+                transformState={transformState}
+                setTransformState={setTransformState}
+                setViewButtonState={setViewButtonState}
+                viewButtonState={viewButtonState}
+                collections={dataProps.collections}
+                maps={dataProps.maps}
+              />
+            </Canvas>
+          </Suspense>
+          <div>
+            {closeVisible && (
+              <CloseButton
+                setCloseClicked={setCloseClicked}
+                setCloseVisible={setCloseVisible}
+              />
+            )}
+            <TransformationButtons
+              transformState={transformState}
+              setTransformState={setTransformState}
+            />
+            <ViewButtons
+              viewButtonState={viewButtonState}
+              setViewButtonState={setViewButtonState}
+            />
+            <Information />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

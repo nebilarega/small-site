@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { Line2 } from "three/examples/jsm/lines/Line2";
 import { LineGeometry } from "three/examples/jsm/lines/LineGeometry";
 import { LineMaterial } from "three/examples/jsm/lines/LineMaterial";
-import { collections } from "../assets/data";
+import { collections } from "../assets/largeData";
 
 export function createBoundingBox(
   object: THREE.Object3D,

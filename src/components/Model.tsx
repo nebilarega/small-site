@@ -3,9 +3,12 @@ import * as THREE from "three";
 import { useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-export function Model(props: any) {
+interface ModelProps {
+  modelPath: string;
+}
+export const Model: React.FC<ModelProps> = ({ modelPath }) => {
   //@ts-ignore
-  const gltf = useLoader(GLTFLoader, "/models/RLarge2.glb");
+  const gltf = useLoader(GLTFLoader, modelPath);
   gltf.scene.traverse((child) => {
     if (child instanceof THREE.Mesh) {
       child.castShadow = true;
@@ -18,4 +21,4 @@ export function Model(props: any) {
       <primitive object={gltf.scene} />
     </mesh>
   );
-}
+};
