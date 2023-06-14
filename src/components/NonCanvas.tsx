@@ -40,8 +40,7 @@ interface Props {
     SetStateAction<"front" | "top" | "left" | "bird">
   >;
   modelProps: { modelPath: string; offset: number };
-  collections: any;
-  maps: any;
+  dataMap: any;
 }
 
 export const NonCanvas: React.FC<Props> = ({
@@ -53,8 +52,7 @@ export const NonCanvas: React.FC<Props> = ({
   viewButtonState,
   setViewButtonState,
   modelProps,
-  collections,
-  maps,
+  dataMap,
 }) => {
   const lightRef = useRef<THREE.DirectionalLight>(null);
   useFrame(() => {
@@ -140,7 +138,7 @@ export const NonCanvas: React.FC<Props> = ({
       resetCamera();
       removeExistingBoundingBox(scene);
       setCloseClicked(false);
-      viewBlocks(scene);
+      viewBlocks(scene, dataMap);
     }
   }, [closeClicked]);
 
@@ -294,14 +292,15 @@ export const NonCanvas: React.FC<Props> = ({
               0xff0000,
               1,
               scene,
+              dataMap,
               "clicked"
             );
             if (int_obj.parent.name.includes("SC_2")) {
-              hideBlocks("SC_1", scene);
+              hideBlocks("SC_1", scene, dataMap);
             }
             if (int_obj.parent.name.includes("SC_3")) {
-              hideBlocks("SC_1", scene);
-              hideBlocks("SC_2", scene);
+              hideBlocks("SC_1", scene, dataMap);
+              hideBlocks("SC_2", scene, dataMap);
             }
             // createBoundingBox(int_obj.parent, 0xff0000, scene);
             // camera.lookAt(
@@ -365,14 +364,17 @@ export const NonCanvas: React.FC<Props> = ({
         // createBoundingBox(int_obj);
         const parent = int_obj.parent;
         if (parent) {
-          const collectionName = Object.keys(collections).find((value) =>
-            parent.name.includes(value)
+          const collectionName = Object.keys(dataMap.collections).find(
+            (value) => parent.name.includes(value)
           );
           if (collectionName) {
             const value =
-              collections[collectionName as keyof typeof collections];
+              dataMap.collections[
+                collectionName as keyof typeof dataMap.collections
+              ];
 
-            const mapVal = maps[collectionName as keyof typeof maps];
+            const mapVal =
+              dataMap.maps[collectionName as keyof typeof dataMap.maps];
             const pointIntersect =
               intersects.length > 0 && intersects[0].point.x;
             if (
@@ -390,7 +392,7 @@ export const NonCanvas: React.FC<Props> = ({
                   ) {
                     obj.position.x = pointIntersect;
                     // if (mapVal.left) {
-                    //   const left = maps[mapVal.left as keyof typeof maps];
+                    //   const left = dataMap.maps[mapVal.left as keyof typeof dataMap.maps];
                     //   left.max = obj.position.x - modelProps.offset;
                     // }
                   } else if (
@@ -399,16 +401,18 @@ export const NonCanvas: React.FC<Props> = ({
                   ) {
                     obj.position.x = pointIntersect;
                     // if (mapVal.right) {
-                    //   const right = maps[mapVal.right as keyof typeof maps];
+                    //   const right = dataMap.maps[mapVal.right as keyof typeof dataMap.maps];
                     //   right.min = obj.position.x + modelProps.offset;
                     // }
                   }
                   if (mapVal.left) {
-                    const left = maps[mapVal.left as keyof typeof maps];
+                    const left =
+                      dataMap.maps[mapVal.left as keyof typeof dataMap.maps];
                     left.max = obj.position.x - modelProps.offset;
                   }
                   if (mapVal.right) {
-                    const right = maps[mapVal.right as keyof typeof maps];
+                    const right =
+                      dataMap.maps[mapVal.right as keyof typeof dataMap.maps];
                     right.min = obj.position.x + modelProps.offset;
                   }
                   // if (obj.position.x >= mapVal.max)
@@ -467,7 +471,13 @@ export const NonCanvas: React.FC<Props> = ({
             int_obj.parent.name !== "Scene" &&
             int_obj.parent.type !== "Scene"
           ) {
-            createBoundingBoxHelper(int_obj.parent, 0x1a872e, 1, scene);
+            createBoundingBoxHelper(
+              int_obj.parent,
+              0x1a872e,
+              1,
+              scene,
+              dataMap
+            );
           }
         } else {
           removeExistingBoundingBox(scene);

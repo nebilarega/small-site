@@ -72,8 +72,7 @@ export const Organize = () => {
                 setTransformState={setTransformState}
                 setViewButtonState={setViewButtonState}
                 viewButtonState={viewButtonState}
-                collections={dataProps.collections}
-                maps={dataProps.maps}
+                dataMap={dataProps}
               />
             </Canvas>
           </Suspense>

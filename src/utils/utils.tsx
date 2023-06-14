@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { Line2 } from "three/examples/jsm/lines/Line2";
 import { LineGeometry } from "three/examples/jsm/lines/LineGeometry";
 import { LineMaterial } from "three/examples/jsm/lines/LineMaterial";
-import { collections } from "../assets/largeData";
+// import { dataMap } from "../assets/largeData";
 
 export function createBoundingBox(
   object: THREE.Object3D,
@@ -15,26 +15,14 @@ export function createBoundingBox(
   bboxHelper.name = "boundingBox";
   scene.add(bboxHelper);
 }
-//   function createBoundingBox(
-//     object: THREE.Object3D,
-//     color: THREE.Color,
-//     thickness: number
-//   ) {
-//     const box = new THREE.Box3().setFromObject(object);
 
-//     const bboxHelper = new THREE.Box3Helper(box, color);
-//     bboxHelper.visible = false;
-//     bboxHelper.scale.set(1 + thickness, 1 + thickness, 1 + thickness); // Scale the helper
-
-//     return bboxHelper;
-//   }
-
-export function hideBlocks(block_id: string, scene: THREE.Scene) {
+export function hideBlocks(block_id: string, scene: THREE.Scene, dataMap: any) {
   if (block_id.includes("SC_1")) {
     const block = ["SC_11", "SC_12", "SC_13"];
     block.forEach((cell_id) => {
-      const cell = collections[cell_id as keyof typeof collections];
-      cell.forEach((cell_block) => {
+      const cell =
+        dataMap.collections[cell_id as keyof typeof dataMap.collections];
+      cell.forEach((cell_block: any) => {
         const cell_block_ = scene.getObjectByName(cell_block);
         if (cell_block_) {
           cell_block_.visible = false;
@@ -44,8 +32,9 @@ export function hideBlocks(block_id: string, scene: THREE.Scene) {
   } else if (block_id.includes("SC_2")) {
     const block = ["SC_21", "SC_22", "SC_23", "SC_24"];
     block.forEach((cell_id) => {
-      const cell = collections[cell_id as keyof typeof collections];
-      cell.forEach((cell_block) => {
+      const cell =
+        dataMap.collections[cell_id as keyof typeof dataMap.collections];
+      cell.forEach((cell_block: any) => {
         const cell_block_ = scene.getObjectByName(cell_block);
         if (cell_block_) {
           cell_block_.visible = false;
@@ -55,7 +44,7 @@ export function hideBlocks(block_id: string, scene: THREE.Scene) {
   }
 }
 
-export function viewBlocks(scene: THREE.Scene) {
+export function viewBlocks(scene: THREE.Scene, dataMap: any) {
   // maybe inefficeint
   const block = [
     "SC_21",
@@ -68,8 +57,9 @@ export function viewBlocks(scene: THREE.Scene) {
     // "SC_14",
   ];
   block.forEach((cell_id) => {
-    const cell = collections[cell_id as keyof typeof collections];
-    cell.forEach((cell_block) => {
+    const cell =
+      dataMap.collections[cell_id as keyof typeof dataMap.collections];
+    cell.forEach((cell_block: any) => {
       const cell_block_ = scene.getObjectByName(cell_block);
       if (cell_block_) {
         cell_block_.visible = true;
@@ -83,6 +73,7 @@ export function createBoundingBoxHelper(
   color: number | string,
   thickness: number,
   scene: THREE.Scene,
+  dataMap: any,
   type?: undefined | "clicked"
 ) {
   removeExistingBoundingBox(scene);
@@ -103,63 +94,63 @@ export function createBoundingBoxHelper(
   ];
 
   if (type) {
-    const twelveInch = textureLoader.load("/15 inches.png");
-    const fifteenInch = textureLoader.load("/12 inches.png");
-    const eighteenInch = textureLoader.load("/18 inches.png");
+    const widthInch = textureLoader.load(dataMap.sizeInfo.width);
+    const heightInch = textureLoader.load(dataMap.sizeInfo.height);
+    const breadthInch = textureLoader.load(dataMap.sizeInfo.breadth);
 
     const planeGeometry = new THREE.PlaneGeometry(0.3, 0.08);
 
-    const twelvePlane = new THREE.Mesh(
+    const widthPlane = new THREE.Mesh(
       planeGeometry.clone(),
       new THREE.MeshStandardMaterial({
-        map: twelveInch,
+        map: widthInch,
         side: THREE.DoubleSide,
         depthTest: false,
       })
     );
-    const fifteenPlane = new THREE.Mesh(
+    const heightPlane = new THREE.Mesh(
       planeGeometry.clone(),
       new THREE.MeshStandardMaterial({
-        map: fifteenInch,
+        map: heightInch,
         side: THREE.DoubleSide,
         depthTest: false,
       })
     );
-    const eighteenPlane = new THREE.Mesh(
+    const breadthPlane = new THREE.Mesh(
       planeGeometry.clone(),
       new THREE.MeshStandardMaterial({
-        map: eighteenInch,
+        map: breadthInch,
         side: THREE.DoubleSide,
         depthTest: false,
       })
     );
 
-    const twelvePosition = new THREE.Vector3();
-    twelvePosition
+    const widthPosition = new THREE.Vector3();
+    widthPosition
       .addVectors(box.min, new THREE.Vector3(box.max.x, box.min.y, box.min.z))
       .multiplyScalar(0.5)
       .add(new THREE.Vector3(0, 0.08 / 2));
 
-    const fifteenPosition = new THREE.Vector3();
-    fifteenPosition
+    const breadthPosition = new THREE.Vector3();
+    breadthPosition
       .addVectors(
         new THREE.Vector3(box.max.x, box.min.y, box.min.z),
         new THREE.Vector3(box.max.x, box.min.y, box.max.z)
       )
       .multiplyScalar(0.5)
       .add(new THREE.Vector3(0, 0.08 / 2));
-    const eighteenPosition = new THREE.Vector3();
-    eighteenPosition.copy(boxCenter);
+    const heightPosition = new THREE.Vector3();
+    heightPosition.copy(boxCenter);
 
-    twelvePlane.position.copy(twelvePosition);
-    fifteenPlane.position.copy(fifteenPosition);
-    fifteenPlane.rotateY(-Math.PI / 2);
-    eighteenPlane.position.copy(eighteenPosition);
-    eighteenPlane.rotateY(-Math.PI / 4);
+    widthPlane.position.copy(widthPosition);
+    heightPlane.position.copy(heightPosition);
+    heightPlane.rotateY(-Math.PI / 4);
+    breadthPlane.position.copy(breadthPosition);
+    breadthPlane.rotateY(-Math.PI / 2);
 
     const infoGroup = new THREE.Group();
     infoGroup.name = "informationGroup";
-    infoGroup.add(twelvePlane, fifteenPlane, eighteenPlane);
+    infoGroup.add(widthPlane, heightPlane, breadthPlane);
     scene.add(infoGroup);
   }
   const top = [
