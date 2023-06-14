@@ -8,8 +8,9 @@ function App() {
   return (
     <div className="App" style={{ width: "100%", height: "100%" }}>
       <Routes>
-        <Route path="/" element={<>No shit</>} />
+        <Route path="/" element={<>404 Not found</>} />
         <Route path="/models/:id" element={<Organize />}></Route>
+        <Route path="*" element={<>404 Not found</>} />
       </Routes>
     </div>
   );
