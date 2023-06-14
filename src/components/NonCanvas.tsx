@@ -17,6 +17,7 @@ import {
   removeExistingBoundingBox,
   viewBlocks,
 } from "../utils/utils";
+import useThrottle from "../optimization/useThrottle";
 // import { collections, maps } from "../assets/smallData";
 
 interface Props {
@@ -350,7 +351,7 @@ export const NonCanvas: React.FC<Props> = ({
     const cursor = document.getElementById("content__container");
     if (cursor) cursor!.style.cursor = "pointer";
   };
-  const handleMouseMove = (event: MouseEvent) => {
+  const handleMouseMove = () => {
     isDomDragged = true;
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObjects(scene.children, true);
@@ -387,20 +388,28 @@ export const NonCanvas: React.FC<Props> = ({
                     pointIntersect > obj.position.x &&
                     mapVal.position.x < mapVal.max
                   ) {
-                    if (mapVal.left) {
-                      const left = maps[mapVal.left as keyof typeof maps];
-                      left.max = obj.position.x - modelProps.offset;
-                    }
                     obj.position.x = pointIntersect;
+                    // if (mapVal.left) {
+                    //   const left = maps[mapVal.left as keyof typeof maps];
+                    //   left.max = obj.position.x - modelProps.offset;
+                    // }
                   } else if (
                     pointIntersect < obj.position.x &&
                     mapVal.position.x > mapVal.min
                   ) {
-                    if (mapVal.right) {
-                      const right = maps[mapVal.right as keyof typeof maps];
-                      right.min = obj.position.x + modelProps.offset;
-                    }
                     obj.position.x = pointIntersect;
+                    // if (mapVal.right) {
+                    //   const right = maps[mapVal.right as keyof typeof maps];
+                    //   right.min = obj.position.x + modelProps.offset;
+                    // }
+                  }
+                  if (mapVal.left) {
+                    const left = maps[mapVal.left as keyof typeof maps];
+                    left.max = obj.position.x - modelProps.offset;
+                  }
+                  if (mapVal.right) {
+                    const right = maps[mapVal.right as keyof typeof maps];
+                    right.min = obj.position.x + modelProps.offset;
                   }
                   // if (obj.position.x >= mapVal.max)
                   //   obj.position.x = pointIntersect;
@@ -472,6 +481,14 @@ export const NonCanvas: React.FC<Props> = ({
     const cursor = document.getElementById("content__container");
     if (cursor) cursor!.style.cursor = "default";
   };
+
+  const handleMouseMoveThrottled = useThrottle(
+    () => {
+      handleMouseMove();
+    },
+    50,
+    []
+  );
 
   useEffect(() => {
     gl.domElement.addEventListener("mousedown", handleMouseDown);
