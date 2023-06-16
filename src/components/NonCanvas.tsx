@@ -18,7 +18,7 @@ import {
   viewBlocks,
 } from "../utils/utils";
 import useThrottle from "../optimization/useThrottle";
-// import { collections, maps } from "../assets/smallData";
+// import { collections, maps } from "../assets/data/smallData";
 
 interface Props {
   setCloseVisible: Dispatch<SetStateAction<boolean>>;

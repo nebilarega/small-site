@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { Line2 } from "three/examples/jsm/lines/Line2";
 import { LineGeometry } from "three/examples/jsm/lines/LineGeometry";
 import { LineMaterial } from "three/examples/jsm/lines/LineMaterial";
-// import { dataMap } from "../assets/largeData";
+// import { dataMap } from "../assets/data/largeData";
 
 export function createBoundingBox(
   object: THREE.Object3D,
@@ -18,28 +18,48 @@ export function createBoundingBox(
 
 export function hideBlocks(block_id: string, scene: THREE.Scene, dataMap: any) {
   if (block_id.includes("SC_1")) {
-    const block = ["SC_11", "SC_12", "SC_13"];
+    const block = [
+      "SC_11",
+      "SC_12",
+      "SC_13",
+      "SC_14",
+      "SC_15",
+      "SC_16",
+      "SC_17",
+    ];
     block.forEach((cell_id) => {
       const cell =
         dataMap.collections[cell_id as keyof typeof dataMap.collections];
-      cell.forEach((cell_block: any) => {
-        const cell_block_ = scene.getObjectByName(cell_block);
-        if (cell_block_) {
-          cell_block_.visible = false;
-        }
-      });
+      if (cell) {
+        cell.forEach((cell_block: any) => {
+          const cell_block_ = scene.getObjectByName(cell_block);
+          if (cell_block_) {
+            cell_block_.visible = false;
+          }
+        });
+      }
     });
   } else if (block_id.includes("SC_2")) {
-    const block = ["SC_21", "SC_22", "SC_23", "SC_24"];
+    const block = [
+      "SC_21",
+      "SC_22",
+      "SC_23",
+      "SC_24",
+      "SC_25",
+      "SC_26",
+      "SC_27",
+    ];
     block.forEach((cell_id) => {
       const cell =
         dataMap.collections[cell_id as keyof typeof dataMap.collections];
-      cell.forEach((cell_block: any) => {
-        const cell_block_ = scene.getObjectByName(cell_block);
-        if (cell_block_) {
-          cell_block_.visible = false;
-        }
-      });
+      if (cell) {
+        cell.forEach((cell_block: any) => {
+          const cell_block_ = scene.getObjectByName(cell_block);
+          if (cell_block_) {
+            cell_block_.visible = false;
+          }
+        });
+      }
     });
   }
 }
@@ -51,20 +71,29 @@ export function viewBlocks(scene: THREE.Scene, dataMap: any) {
     "SC_22",
     "SC_23",
     "SC_24",
+    "SC_25",
+    "SC_26",
+    "SC_27",
     "SC_11",
     "SC_12",
     "SC_13",
+    "SC_14",
+    "SC_15",
+    "SC_16",
+    "SC_17",
     // "SC_14",
   ];
   block.forEach((cell_id) => {
     const cell =
       dataMap.collections[cell_id as keyof typeof dataMap.collections];
-    cell.forEach((cell_block: any) => {
-      const cell_block_ = scene.getObjectByName(cell_block);
-      if (cell_block_) {
-        cell_block_.visible = true;
-      }
-    });
+    if (cell) {
+      cell.forEach((cell_block: any) => {
+        const cell_block_ = scene.getObjectByName(cell_block);
+        if (cell_block_) {
+          cell_block_.visible = true;
+        }
+      });
+    }
   });
 }
 

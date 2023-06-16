@@ -1,6 +1,27 @@
 import React from "react";
 
-const Information = () => {
+interface DetailInfoInterface {
+  height: number;
+  breadth: number;
+  width: number;
+  columns: number;
+  pockets: number;
+}
+
+interface GeneralInfoInterface {
+  innerHeight: number;
+  innerDepth: number;
+  innerWidth: number;
+  pocketSum: number;
+}
+
+interface Props {
+  info: {
+    generalInfo: GeneralInfoInterface;
+    detailInfo: DetailInfoInterface[];
+  };
+}
+const Information: React.FC<Props> = ({ info }) => {
   return (
     <div
       style={{
@@ -28,35 +49,43 @@ const Information = () => {
         <ul
           style={{ textAlign: "start", fontSize: "0.8rem", fontWeight: "500" }}
         >
-          <li>inner height: 91.0in</li>
-          <li>inner depth: 36.5in</li>
-          <li>inner with: 96.0in</li>
-          <li>pocket sum: 273</li>
+          <li>inner height: {info.generalInfo.innerHeight}in</li>
+          <li>inner depth: {info.generalInfo.innerDepth}in</li>
+          <li>inner width: {info.generalInfo.innerWidth}in</li>
+          <li>pocket sum: {info.generalInfo.pocketSum}</li>
         </ul>
       </div>
-      <div>
-        <div
-          className="title"
-          style={{
-            fontSize: "1.3rem",
-            fontWeight: "600",
-            paddingLeft: "1rem",
-            textAlign: "start",
-          }}
-        >
-          Pocket in row (rear)
-        </div>
-        <ul
-          style={{ textAlign: "start", fontSize: "0.8rem", fontWeight: "500" }}
-        >
-          <li>height: 6.0in</li>
-          <li>depth: 10.5in</li>
-          <li>width: 12.0in</li>
-          <li>columns sum: 8</li>
-          <li>pockets sum: 104</li>
-        </ul>
-      </div>
-      <div>
+      {info.detailInfo.map((detailInfo, index) => {
+        return (
+          <div>
+            <div
+              className="title"
+              style={{
+                fontSize: "1.3rem",
+                fontWeight: "600",
+                paddingLeft: "1rem",
+                textAlign: "start",
+              }}
+            >
+              Pocket in row {index + 1}
+            </div>
+            <ul
+              style={{
+                textAlign: "start",
+                fontSize: "0.8rem",
+                fontWeight: "500",
+              }}
+            >
+              <li>height: {detailInfo.height}in</li>
+              <li>depth: {detailInfo.breadth}in</li>
+              <li>width: {detailInfo.width}in</li>
+              <li>columns sum: {detailInfo.columns}</li>
+              <li>pockets sum: {detailInfo.pockets}</li>
+            </ul>
+          </div>
+        );
+      })}
+      {/* <div>
         <div
           className="title"
           style={{
@@ -99,33 +128,9 @@ const Information = () => {
           <li>columns sum: 6</li>
           <li>pockets sum: 78</li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };
 
 export default Information;
-
-// Rack dimensions:
-// inner height: 91.0in
-// inner depth: 36.5in
-// inner with: 96.0in
-// pocket sum: 273
-// Pocket in row 1 (rear):
-// height: 6.0in
-// depth: 10.5in
-// width: 12.0in
-// columns sum: 8
-// pockets sum: 104
-// Pocket in row 2:
-// height: 6.0in
-// depth: 10.5in
-// width: 12.0in
-// columns sum: 7
-// pockets sum: 91
-// Pocket in row 3:
-// height: 6.0in
-// depth: 10.5in
-// width: 12.0in
-// columns sum: 6
-// pockets sum: 78

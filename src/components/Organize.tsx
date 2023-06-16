@@ -43,6 +43,8 @@ export const Organize = () => {
   const modelProps = ModelMap.get(id as string);
   const dataProps = DataMap.get(id as string);
 
+  console.log(dataProps);
+
   const [closeVisible, setCloseVisible] = useState(false);
   const [closeClicked, setCloseClicked] = useState(false);
   const [transformState, setTransformState] = useState<
@@ -61,7 +63,10 @@ export const Organize = () => {
             <Canvas shadows={true}>
               <fog attach="fog" args={["#ffffff", 0, 20]} />
               <ambientLight />
-              <Model modelPath={modelProps.modelPath} />
+              <Model
+                modelPath={modelProps.modelPath}
+                modelType={id as string}
+              />
               {/* <gridHelper args={[100, 1000]} position={[0, -0.5, 0]} /> */}
               <NonCanvas
                 modelProps={modelProps}
@@ -91,7 +96,7 @@ export const Organize = () => {
               viewButtonState={viewButtonState}
               setViewButtonState={setViewButtonState}
             />
-            <Information />
+            <Information info={dataProps.info} />
           </div>
         </div>
       )}
