@@ -224,7 +224,7 @@ export const NonCanvas: React.FC<Props> = ({
         case "left":
           resetCamera();
           new TWEEN.Tween(camera.position)
-            .to(new THREE.Vector3(-3.4, 0, 0), 1000) // Set the duration of the animation in milliseconds
+            .to(new THREE.Vector3(-3.7, 0, 0), 1000) // Set the duration of the animation in milliseconds
             .easing(TWEEN.Easing.Quadratic.InOut) // Set the easing function for the animation
             //   .onUpdate(() => {
             //     camera.position.copy(startPosition);
@@ -536,7 +536,7 @@ export const NonCanvas: React.FC<Props> = ({
         />
       )} */}
       <mesh
-        position={[0, -0.9, 0]}
+        position={[0, -1.5, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
         castShadow={true}
         receiveShadow={true}

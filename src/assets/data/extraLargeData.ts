@@ -39,7 +39,7 @@ export const maps = {
     right: null,
     position: { x: 0, y: 0, z: 0 },
     min: 0.4,
-    max: 0.9,
+    max: 1,
   },
   // SC_14: {
   //   left: "SC_13",
