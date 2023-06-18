@@ -390,20 +390,28 @@ export const NonCanvas: React.FC<Props> = ({
                     pointIntersect > obj.position.x &&
                     mapVal.position.x < mapVal.max
                   ) {
-                    obj.position.x = pointIntersect;
                     // if (mapVal.left) {
                     //   const left = dataMap.maps[mapVal.left as keyof typeof dataMap.maps];
                     //   left.max = obj.position.x - modelProps.offset;
                     // }
+                    const distance = pointIntersect - obj.position.x;
+                    const dampingFactor = 0.3; // Adjust this value to control the damping effect
+                    const newPosition =
+                      obj.position.x + distance * dampingFactor;
+                    obj.position.x = newPosition;
                   } else if (
                     pointIntersect < obj.position.x &&
                     mapVal.position.x > mapVal.min
                   ) {
-                    obj.position.x = pointIntersect;
                     // if (mapVal.right) {
                     //   const right = dataMap.maps[mapVal.right as keyof typeof dataMap.maps];
                     //   right.min = obj.position.x + modelProps.offset;
                     // }
+                    const distance = pointIntersect - obj.position.x;
+                    const dampingFactor = 0.3; // Adjust this value to control the damping effect
+                    const newPosition =
+                      obj.position.x + distance * dampingFactor;
+                    obj.position.x = newPosition;
                   }
                   if (mapVal.left) {
                     const left =
