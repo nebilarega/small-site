@@ -1,15 +1,7 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useFrame, useLoader, useThree } from "@react-three/fiber";
-import { useHelper } from "@react-three/drei";
 import * as THREE from "three";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
-import { OrbitControls } from "@react-three/drei";
 import TWEEN from "@tweenjs/tween.js";
 import {
   createBoundingBoxHelper,
@@ -55,6 +47,7 @@ export const NonCanvas: React.FC<Props> = ({
   dataMap,
 }) => {
   const lightRef = useRef<THREE.DirectionalLight>(null);
+  const DAMPING_FACTOR = 0.5;
   useFrame(() => {
     TWEEN.update();
   });
@@ -388,18 +381,16 @@ export const NonCanvas: React.FC<Props> = ({
                       mapVal.position.x < mapVal.max
                     ) {
                       const distance = pointIntersect - obj.position.x;
-                      const dampingFactor = 0.3; // Adjust this value to control the damping effect
                       const newPosition =
-                        obj.position.x + distance * dampingFactor;
+                        obj.position.x + distance * DAMPING_FACTOR;
                       obj.position.x = newPosition;
                     } else if (
                       pointIntersect < obj.position.x &&
                       mapVal.position.x > mapVal.min
                     ) {
                       const distance = pointIntersect - obj.position.x;
-                      const dampingFactor = 0.3; // Adjust this value to control the damping effect
                       const newPosition =
-                        obj.position.x + distance * dampingFactor;
+                        obj.position.x + distance * DAMPING_FACTOR;
                       obj.position.x = newPosition;
                     }
                     if (mapVal.left) {

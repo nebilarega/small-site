@@ -2,7 +2,6 @@ import React, { Dispatch, SetStateAction, Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Model } from "./Model";
 import { NonCanvas } from "./NonCanvas";
-import * as THREE from "three";
 import { HiOutlineZoomIn } from "react-icons/hi";
 import { HiOutlineZoomOut } from "react-icons/hi";
 import { BiRotateLeft } from "react-icons/bi";
