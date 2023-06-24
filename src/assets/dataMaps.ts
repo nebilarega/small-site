@@ -34,15 +34,15 @@ DataMap.set("small", {
   },
   info: {
     generalInfo: {
-      innerHeight: 94,
-      innerDepth: 94,
-      innerWidth: 94,
-      pocketSum: 232,
+      innerHeight: 78,
+      innerDepth: 36,
+      innerWidth: 72,
+      pocketSum: 60,
     },
     detailInfo: [
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
+      { height: 8, breadth: 12, width: 12, columns: 3, pockets: 24 },
+      { height: 8, breadth: 12, width: 12, columns: 3, pockets: 24 },
+      { height: 8, breadth: 12, width: 12, columns: 3, pockets: 24 },
     ],
   },
 });
@@ -57,15 +57,15 @@ DataMap.set("large", {
   },
   info: {
     generalInfo: {
-      innerHeight: 94,
-      innerDepth: 94,
-      innerWidth: 94,
-      pocketSum: 232,
+      innerHeight: 78,
+      innerDepth: 36,
+      innerWidth: 72,
+      pocketSum: 60,
     },
     detailInfo: [
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
+      { height: 16, breadth: 12, width: 18, columns: 3, pockets: 24 },
+      { height: 16, breadth: 12, width: 18, columns: 3, pockets: 24 },
+      { height: 16, breadth: 12, width: 18, columns: 3, pockets: 24 },
     ],
   },
 });
@@ -80,14 +80,14 @@ DataMap.set("extraLarge", {
   },
   info: {
     generalInfo: {
-      innerHeight: 94,
-      innerDepth: 94,
-      innerWidth: 94,
-      pocketSum: 232,
+      innerHeight: 78,
+      innerDepth: 36,
+      innerWidth: 72,
+      pocketSum: 60,
     },
     detailInfo: [
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
+      { height: 16, breadth: 19, width: 16, columns: 3, pockets: 24 },
+      { height: 16, breadth: 19, width: 16, columns: 3, pockets: 24 },
     ],
   },
 });
@@ -96,20 +96,20 @@ DataMap.set("extraExtraLarge", {
   collections: extraExtraLargeCollections,
   maps: extraExtraLargeMaps,
   sizeInfo: {
-    width: "24 inches.png",
-    height: "20 inches.png",
-    breadth: "19 inches.png",
+    width: "/24 inches.png",
+    height: "/20 inches.png",
+    breadth: "/19 inches.png",
   },
   info: {
     generalInfo: {
-      innerHeight: 94,
-      innerDepth: 94,
-      innerWidth: 94,
-      pocketSum: 232,
+      innerHeight: 78,
+      innerDepth: 36,
+      innerWidth: 72,
+      pocketSum: 60,
     },
     detailInfo: [
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
+      { height: 20, breadth: 19, width: 24, columns: 3, pockets: 24 },
+      { height: 20, breadth: 19, width: 24, columns: 3, pockets: 24 },
     ],
   },
 });
@@ -124,15 +124,15 @@ DataMap.set("medium", {
   },
   info: {
     generalInfo: {
-      innerHeight: 94,
-      innerDepth: 94,
-      innerWidth: 94,
-      pocketSum: 232,
+      innerHeight: 78,
+      innerDepth: 36,
+      innerWidth: 72,
+      pocketSum: 60,
     },
     detailInfo: [
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
+      { height: 13, breadth: 12, width: 12, columns: 3, pockets: 24 },
+      { height: 13, breadth: 12, width: 12, columns: 3, pockets: 24 },
+      { height: 13, breadth: 12, width: 12, columns: 3, pockets: 24 },
     ],
   },
 });
@@ -146,15 +146,15 @@ DataMap.set("extraSmall", {
   },
   info: {
     generalInfo: {
-      innerHeight: 94,
-      innerDepth: 94,
-      innerWidth: 94,
-      pocketSum: 232,
+      innerHeight: 78,
+      innerDepth: 36,
+      innerWidth: 72,
+      pocketSum: 60,
     },
     detailInfo: [
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
-      { height: 18, breadth: 12, width: 15, columns: 3, pockets: 24 },
+      { height: 8, breadth: 12, width: 9, columns: 3, pockets: 24 },
+      { height: 8, breadth: 12, width: 9, columns: 3, pockets: 24 },
+      { height: 8, breadth: 12, width: 9, columns: 3, pockets: 24 },
     ],
   },
 });

@@ -18,7 +18,7 @@ ModelMap.set("extraLarge", {
 });
 ModelMap.set("extraExtraLarge", {
   modelPath: "/models/RExtraExtraLarge.glb",
-  offset: 0.8,
+  offset: 0.75,
 });
 ModelMap.set("medium", {
   modelPath: "/models/RMedium.glb",

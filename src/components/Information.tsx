@@ -57,7 +57,7 @@ const Information: React.FC<Props> = ({ info }) => {
       </div>
       {info.detailInfo.map((detailInfo, index) => {
         return (
-          <div>
+          <div key={index}>
             <div
               className="title"
               style={{

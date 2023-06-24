@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useFrame, useLoader, useThree } from "@react-three/fiber";
+import { ScrollControls, useScroll } from "@react-three/drei";
 import * as THREE from "three";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import TWEEN from "@tweenjs/tween.js";
@@ -47,7 +48,11 @@ export const NonCanvas: React.FC<Props> = ({
   dataMap,
 }) => {
   const lightRef = useRef<THREE.DirectionalLight>(null);
-  const DAMPING_FACTOR = 0.5;
+  const { camera, scene, raycaster, mouse, gl } = useThree();
+  // const scroll = useScroll();
+
+  const DAMPING_FACTOR = 1;
+  const SCROLL_SPEED = 0.8;
   useFrame(() => {
     TWEEN.update();
   });
@@ -92,7 +97,6 @@ export const NonCanvas: React.FC<Props> = ({
   roughnessMap.wrapS = roughnessMap.wrapT = THREE.RepeatWrapping;
   roughnessMap.repeat.set(repeatX, repeatY);
 
-  const { camera, scene, raycaster, mouse, gl } = useThree();
   // const [manualClose, setManualClose] = useState(false);
   const previousMousePosition = useRef<[number, number]>([mouse.x, mouse.y]);
   const originalPosition = useRef(camera.position.clone());
@@ -134,6 +138,9 @@ export const NonCanvas: React.FC<Props> = ({
       removeExistingBoundingBox(scene);
       setCloseClicked(false);
       viewBlocks(scene, dataMap);
+      if (manualClose.current) {
+        manualClose.current = !manualClose.current;
+      }
     }
   }, [closeClicked]);
 
@@ -182,6 +189,9 @@ export const NonCanvas: React.FC<Props> = ({
   useEffect(() => {
     if (viewButtonState) {
       setCloseVisible(false);
+      if (manualClose.current) {
+        manualClose.current = !manualClose.current;
+      }
       switch (viewButtonState) {
         case "front":
           resetCamera();
@@ -372,13 +382,15 @@ export const NonCanvas: React.FC<Props> = ({
                 (mapVal.position.x < mapVal.max ||
                   mapVal.position.x > mapVal.min) &&
                 pointIntersect
+                // pointIntersect < 1.12
               ) {
+                console.log(pointIntersect);
                 value.forEach((groupName: any) => {
                   const obj = scene.getObjectByName(groupName);
                   if (obj?.position) {
                     if (
                       pointIntersect > obj.position.x &&
-                      mapVal.position.x < mapVal.max
+                      pointIntersect < mapVal.max
                     ) {
                       const distance = pointIntersect - obj.position.x;
                       const newPosition =
@@ -386,7 +398,7 @@ export const NonCanvas: React.FC<Props> = ({
                       obj.position.x = newPosition;
                     } else if (
                       pointIntersect < obj.position.x &&
-                      mapVal.position.x > mapVal.min
+                      pointIntersect > mapVal.min
                     ) {
                       const distance = pointIntersect - obj.position.x;
                       const newPosition =
@@ -470,17 +482,42 @@ export const NonCanvas: React.FC<Props> = ({
     []
   );
 
+  const handleScroll = (event: WheelEvent) => {
+    event.preventDefault();
+    // Adjust the scroll speed as needed
+    const minFOV = 10; // Minimum FOV value
+    const maxFOV = 100; // Maximum FOV value
+    console.log(window.scrollY);
+    // Calculate the new FOV based on the scroll position
+    const newFOV =
+      (camera as THREE.PerspectiveCamera).fov +
+      Math.sign(event.deltaY) * SCROLL_SPEED;
+
+    // Limit the FOV within the specified range
+    (camera as THREE.PerspectiveCamera).fov = Math.max(
+      minFOV,
+      Math.min(maxFOV, newFOV)
+    );
+
+    // Update the camera's projection matrix
+    camera.updateProjectionMatrix();
+
+    // Render the scene to reflect the FOV changes
+    camera.dispatchEvent({ type: "updateProjectionMatrix" });
+  };
+
   useEffect(() => {
     gl.domElement.addEventListener("mousedown", handleMouseDown);
     gl.domElement.addEventListener("mousemove", handleMouseMove);
     gl.domElement.addEventListener("mouseup", handleMouseUp);
     gl.domElement.addEventListener("click", handleDomClick);
-
+    gl.domElement.addEventListener("wheel", handleScroll);
     return () => {
       gl.domElement.removeEventListener("mousedown", handleMouseDown);
       gl.domElement.removeEventListener("mousemove", handleMouseMove);
       gl.domElement.removeEventListener("mouseup", handleMouseUp);
       gl.domElement.removeEventListener("click", handleDomClick);
+      gl.domElement.removeEventListener("wheel", handleScroll);
     };
   }, [gl]);
 

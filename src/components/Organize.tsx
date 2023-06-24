@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, Suspense, useState } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
+import * as THREE from "three";
 import { Model } from "./Model";
 import { NonCanvas } from "./NonCanvas";
 import { HiOutlineZoomIn } from "react-icons/hi";
@@ -11,6 +12,7 @@ import Fallback from "./Fallback";
 import { useParams } from "react-router-dom";
 import ModelMap from "../assets/modelMap";
 import DataMap from "../assets/dataMaps";
+import { CloseButton } from "./CloseButton";
 
 interface TransformState {
   transformState:
@@ -41,8 +43,6 @@ export const Organize = () => {
   const { id } = useParams();
   const modelProps = ModelMap.get(id as string);
   const dataProps = DataMap.get(id as string);
-
-  console.log(dataProps);
 
   const [closeVisible, setCloseVisible] = useState(false);
   const [closeClicked, setCloseClicked] = useState(false);
@@ -100,40 +100,6 @@ export const Organize = () => {
         </div>
       )}
     </>
-  );
-};
-
-const CloseButton: React.FC<CloseButtonProps> = ({
-  setCloseClicked,
-  setCloseVisible,
-}) => {
-  return (
-    <div
-      style={{
-        position: "absolute",
-        left: "5%",
-        top: "5%",
-        width: "200px",
-        height: "200px",
-      }}
-    >
-      <button
-        style={{
-          fontSize: "50px",
-          outline: "none",
-          border: "none",
-          cursor: "pointer",
-          padding: "8px 20px 8px 20px",
-          borderRadius: "50%",
-        }}
-        onClick={() => {
-          setCloseClicked(true);
-          setCloseVisible(false);
-        }}
-      >
-        X
-      </button>
-    </div>
   );
 };
 
