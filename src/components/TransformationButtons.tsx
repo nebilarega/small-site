@@ -1,8 +1,9 @@
-import React, { Dispatch, SetStateAction, Suspense, useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { HiOutlineZoomIn } from "react-icons/hi";
 import { HiOutlineZoomOut } from "react-icons/hi";
 import { BiRotateLeft } from "react-icons/bi";
 import { BiRotateRight } from "react-icons/bi";
+import "../transformButton.css";
 
 interface TransformState {
   transformState:
@@ -22,25 +23,10 @@ export const TransformationButtons: React.FC<TransformState> = ({
   setTransformState,
 }) => {
   return (
-    <div style={{ position: "absolute", left: "5%", bottom: "5%" }}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: ".4rem",
-        }}
-      >
+    <div className="container">
+      <div className="sub__container">
         <div
-          style={{
-            backgroundColor: "#ffffff",
-            // fontSize: "50px",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "20px",
-            borderRadius: "50%",
-          }}
+          className="cirle__back"
           onClick={() => {
             setTransformState("zoomin");
           }}
@@ -48,14 +34,7 @@ export const TransformationButtons: React.FC<TransformState> = ({
           <HiOutlineZoomIn size={27} />
         </div>
         <div
-          style={{
-            backgroundColor: "#ffffff",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "20px",
-            borderRadius: "50%",
-          }}
+          className="cirle__back"
           onClick={() => {
             setTransformState("zoomout");
           }}
@@ -63,21 +42,9 @@ export const TransformationButtons: React.FC<TransformState> = ({
           <HiOutlineZoomOut size={27} />
         </div>
       </div>
-      <div
-        style={{
-          display: "flex",
-          gap: "0.4rem",
-        }}
-      >
+      <div className="sub__container__hor">
         <div
-          style={{
-            backgroundColor: "#ffffff",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "20px",
-            borderRadius: "50%",
-          }}
+          className="cirle__back"
           onClick={() => {
             setTransformState("clockwise");
           }}
@@ -85,14 +52,7 @@ export const TransformationButtons: React.FC<TransformState> = ({
           <BiRotateLeft size={27} />
         </div>
         <div
-          style={{
-            backgroundColor: "#ffffff",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "20px",
-            borderRadius: "50%",
-          }}
+          className="cirle__back"
           onClick={() => {
             setTransformState("counterclockwise");
           }}

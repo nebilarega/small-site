@@ -1,8 +1,8 @@
-import React, { Dispatch, SetStateAction, Suspense, useState } from "react";
-import { Canvas, useThree } from "@react-three/fiber";
+import React, { Suspense, useState } from "react";
+import { Canvas } from "@react-three/fiber";
 import { Model } from "./Model";
 import { NonCanvas } from "./NonCanvas";
-
+import * as THREE from "three";
 import Information from "./Information";
 import Fallback from "./Fallback";
 import { useParams } from "react-router-dom";

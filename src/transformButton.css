@@ -1,0 +1,27 @@
+.container {
+  position: absolute;
+  left: 5%;
+  bottom: 5%;
+}
+.sub__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+.sub__container__hor {
+  display: flex;
+  gap: 0.4rem;
+}
+.cirle__back {
+  background-color: #ffffff;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: 20px;
+  border-radius: 50%;
+  transition: all 150ms ease-in-out;
+}
+.cirle__back:hover {
+  box-shadow: 0 0 0 20px rgba(218, 218, 218, 0.5);
+}
