@@ -169,7 +169,9 @@ export function createBoundingBoxHelper(
       .multiplyScalar(0.5)
       .add(new THREE.Vector3(0, 0.08 / 2));
     const heightPosition = new THREE.Vector3();
-    heightPosition.copy(boxCenter);
+    heightPosition.copy(
+      new THREE.Vector3(boxCenter.x, boxCenter.y + 0.05, boxCenter.z)
+    );
 
     widthPlane.position.copy(widthPosition);
     heightPlane.position.copy(heightPosition);

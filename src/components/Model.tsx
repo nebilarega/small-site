@@ -13,7 +13,7 @@ export const Model: React.FC<ModelProps> = ({ modelPath, modelType }) => {
   gltf.scene.traverse((child) => {
     if (child instanceof THREE.Mesh) {
       child.castShadow = true;
-      child.receiveShadow = true;
+      // child.receiveShadow = true;
     }
   });
   gltf.scene.position.z = 0.5;

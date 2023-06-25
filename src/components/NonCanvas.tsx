@@ -62,6 +62,9 @@ export const NonCanvas: React.FC<Props> = ({
       lightRef.current.shadow.camera.right = 10;
       lightRef.current.shadow.camera.top = 10;
       lightRef.current.shadow.camera.bottom = -10;
+      lightRef.current.shadow.mapSize.width = 2048;
+      lightRef.current.shadow.mapSize.height = 2048;
+      lightRef.current.shadow.bias = -0.001;
       lightRef.current.shadow.camera.updateProjectionMatrix();
     }
   }, []);
@@ -544,8 +547,8 @@ export const NonCanvas: React.FC<Props> = ({
         <planeGeometry args={[100, 100]} />
         <meshStandardMaterial
           side={THREE.DoubleSide}
-          map={diffuseMap}
-          alphaMap={map}
+          map={map}
+          alphaMap={diffuseMap}
           roughnessMap={roughnessMap}
           metalness={1}
           metalnessMap={metalic}

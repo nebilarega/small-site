@@ -4,6 +4,9 @@ import "../supense.css";
 const Fallback = () => {
   return (
     <div id="content__container" className="content__container">
+      <div className="logo">
+        <img src="/unexfav.webp" alt="logo" />
+      </div>
       <div className="content">
         <div className="ball red"></div>
         <div className="ball green"></div>

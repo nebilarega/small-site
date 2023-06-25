@@ -1,43 +1,16 @@
 import React, { Dispatch, SetStateAction, Suspense, useState } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
-import * as THREE from "three";
 import { Model } from "./Model";
 import { NonCanvas } from "./NonCanvas";
-import { HiOutlineZoomIn } from "react-icons/hi";
-import { HiOutlineZoomOut } from "react-icons/hi";
-import { BiRotateLeft } from "react-icons/bi";
-import { BiRotateRight } from "react-icons/bi";
+
 import Information from "./Information";
 import Fallback from "./Fallback";
 import { useParams } from "react-router-dom";
 import ModelMap from "../assets/modelMap";
 import DataMap from "../assets/dataMaps";
 import { CloseButton } from "./CloseButton";
-
-interface TransformState {
-  transformState:
-    | null
-    | "clockwise"
-    | "counterclockwise"
-    | "zoomin"
-    | "zoomout";
-  setTransformState: Dispatch<
-    SetStateAction<
-      null | "clockwise" | "counterclockwise" | "zoomin" | "zoomout"
-    >
-  >;
-}
-interface ViewButtonsStates {
-  viewButtonState: "front" | "top" | "left" | "bird";
-  setViewButtonState: Dispatch<
-    SetStateAction<"front" | "top" | "left" | "bird">
-  >;
-}
-
-interface CloseButtonProps {
-  setCloseClicked: Dispatch<SetStateAction<boolean>>;
-  setCloseVisible: Dispatch<SetStateAction<boolean>>;
-}
+import { TransformationButtons } from "./TransformationButtons";
+import { ViewButtons } from "./ViewButtons";
 
 export const Organize = () => {
   const { id } = useParams();
@@ -61,7 +34,7 @@ export const Organize = () => {
           <Suspense fallback={<Fallback />}>
             <Canvas shadows={true}>
               <fog attach="fog" args={["#ffffff", 0, 20]} />
-              <ambientLight />
+              <ambientLight args={[0xffffff, 0.1]} />
               <Model
                 modelPath={modelProps.modelPath}
                 modelType={id as string}
@@ -100,176 +73,5 @@ export const Organize = () => {
         </div>
       )}
     </>
-  );
-};
-
-const TransformationButtons: React.FC<TransformState> = ({
-  transformState,
-  setTransformState,
-}) => {
-  return (
-    <div style={{ position: "absolute", left: "5%", bottom: "5%" }}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: ".4rem",
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: "#ffffff",
-            // fontSize: "50px",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "20px",
-            borderRadius: "50%",
-          }}
-          onClick={() => {
-            setTransformState("zoomin");
-          }}
-        >
-          <HiOutlineZoomIn size={27} />
-        </div>
-        <div
-          style={{
-            backgroundColor: "#ffffff",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "20px",
-            borderRadius: "50%",
-          }}
-          onClick={() => {
-            setTransformState("zoomout");
-          }}
-        >
-          <HiOutlineZoomOut size={27} />
-        </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          gap: "0.4rem",
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: "#ffffff",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "20px",
-            borderRadius: "50%",
-          }}
-          onClick={() => {
-            setTransformState("clockwise");
-          }}
-        >
-          <BiRotateLeft size={27} />
-        </div>
-        <div
-          style={{
-            backgroundColor: "#ffffff",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "20px",
-            borderRadius: "50%",
-          }}
-          onClick={() => {
-            setTransformState("counterclockwise");
-          }}
-        >
-          <BiRotateRight size={27} />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const ViewButtons: React.FC<ViewButtonsStates> = ({
-  viewButtonState,
-  setViewButtonState,
-}) => {
-  return (
-    <div
-      style={{
-        position: "absolute",
-        right: "1%",
-        top: "5%",
-        backgroundColor: "white",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          gap: "0.4rem",
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: "#ffffff",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "10px",
-            fontWeight: 600,
-          }}
-          onClick={() => {
-            setViewButtonState("front");
-          }}
-        >
-          FRONT VIEW
-        </div>
-        <div
-          style={{
-            backgroundColor: "#ffffff",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "10px",
-            fontWeight: 600,
-          }}
-          onClick={() => {
-            setViewButtonState("top");
-          }}
-        >
-          TOP VIEW
-        </div>
-        <div
-          style={{
-            backgroundColor: "#ffffff",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "10px",
-            fontWeight: 600,
-          }}
-          onClick={() => {
-            setViewButtonState("left");
-          }}
-        >
-          LEFT VIEW
-        </div>
-        <div
-          style={{
-            backgroundColor: "#ffffff",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "10px",
-            fontWeight: 600,
-          }}
-          onClick={() => {
-            setViewButtonState("bird");
-          }}
-        >
-          BIRD VIEW
-        </div>
-      </div>
-    </div>
   );
 };
