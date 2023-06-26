@@ -26,7 +26,7 @@ const Information: React.FC<Props> = ({ info }) => {
     <div
       style={{
         position: "absolute",
-        top: "10%",
+        top: "15%",
         right: "1%",
         backgroundColor: "white",
         padding: "0.5rem 0.8rem 0.5rem 0",

@@ -1,8 +1,7 @@
 import React from "react";
 import { Organize } from "./components/Organize";
 import "./App.css";
-import { Routes, Route, Outlet, Link } from "react-router-dom";
-import Fallback from "./components/Fallback";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (

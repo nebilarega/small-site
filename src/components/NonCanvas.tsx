@@ -387,7 +387,6 @@ export const NonCanvas: React.FC<Props> = ({
                 pointIntersect
                 // pointIntersect < 1.12
               ) {
-                console.log(pointIntersect);
                 value.forEach((groupName: any) => {
                   const obj = scene.getObjectByName(groupName);
                   if (obj?.position) {
@@ -490,7 +489,6 @@ export const NonCanvas: React.FC<Props> = ({
     // Adjust the scroll speed as needed
     const minFOV = 10; // Minimum FOV value
     const maxFOV = 100; // Maximum FOV value
-    console.log(window.scrollY);
     // Calculate the new FOV based on the scroll position
     const newFOV =
       (camera as THREE.PerspectiveCamera).fov +

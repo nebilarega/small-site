@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
+import "../viewButtons.css";
 interface ViewButtonsStates {
   viewButtonState: "front" | "top" | "left" | "bird";
   setViewButtonState: Dispatch<
@@ -11,29 +12,10 @@ export const ViewButtons: React.FC<ViewButtonsStates> = ({
   setViewButtonState,
 }) => {
   return (
-    <div
-      style={{
-        position: "absolute",
-        right: "1%",
-        top: "5%",
-        backgroundColor: "white",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          gap: "0.4rem",
-        }}
-      >
+    <div className="_container">
+      <div className="sub__container__hor">
         <div
-          style={{
-            backgroundColor: "#ffffff",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "10px",
-            fontWeight: 600,
-          }}
+          className="cirle"
           onClick={() => {
             setViewButtonState("front");
           }}
@@ -41,14 +23,7 @@ export const ViewButtons: React.FC<ViewButtonsStates> = ({
           FRONT VIEW
         </div>
         <div
-          style={{
-            backgroundColor: "#ffffff",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "10px",
-            fontWeight: 600,
-          }}
+          className="cirle"
           onClick={() => {
             setViewButtonState("top");
           }}
@@ -56,14 +31,7 @@ export const ViewButtons: React.FC<ViewButtonsStates> = ({
           TOP VIEW
         </div>
         <div
-          style={{
-            backgroundColor: "#ffffff",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "10px",
-            fontWeight: 600,
-          }}
+          className="cirle"
           onClick={() => {
             setViewButtonState("left");
           }}
@@ -71,14 +39,7 @@ export const ViewButtons: React.FC<ViewButtonsStates> = ({
           LEFT VIEW
         </div>
         <div
-          style={{
-            backgroundColor: "#ffffff",
-            outline: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: "10px",
-            fontWeight: 600,
-          }}
+          className="cirle"
           onClick={() => {
             setViewButtonState("bird");
           }}
