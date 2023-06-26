@@ -27,6 +27,7 @@ export const Model: React.FC<ModelProps> = ({ modelPath, modelType }) => {
   //   gltf.scene.position.y = -0.4;
   else if (modelType === "large") {
     gltf.scene.position.y = -0.65;
+    gltf.scene.position.z = 0.5;
   }
   return (
     <mesh castShadow receiveShadow>
