@@ -526,7 +526,7 @@ export const NonCanvas: React.FC<Props> = ({
     <group>
       <directionalLight
         ref={lightRef}
-        position={[-2, 3, 6]}
+        position={[-1.2, 3, 6]}
         args={[0xffffff, 0.8]}
         castShadow
       />

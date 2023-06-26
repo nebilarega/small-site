@@ -16,10 +16,12 @@ export const Model: React.FC<ModelProps> = ({ modelPath, modelType }) => {
       child.receiveShadow = true;
     }
   });
-  gltf.scene.position.z = 0.5;
+  // gltf.scene.position.z = 0.5;
   gltf.scene.position.y = -0.7;
   if (modelType === "extraExtraLarge") {
     gltf.scene.position.y = -1.1;
+  } else if (modelType === "small") {
+    gltf.scene.position.z = 0.5;
   }
   // else if (modelType === "extraExtraLarge") {
   //   gltf.scene.position.y = -0.4;
