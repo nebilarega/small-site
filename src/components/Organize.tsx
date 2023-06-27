@@ -11,20 +11,23 @@ import DataMap from "../assets/dataMaps";
 import { CloseButton } from "./CloseButton";
 import { TransformationButtons } from "./TransformationButtons";
 import { ViewButtons } from "./ViewButtons";
+import { ResetButton } from "./ResetButton";
 
 export const Organize = () => {
   const { id } = useParams();
   const modelProps = ModelMap.get(id as string);
   const dataProps = DataMap.get(id as string);
-
   const [closeVisible, setCloseVisible] = useState(false);
   const [closeClicked, setCloseClicked] = useState(false);
+  const [resetVisble, setResetVisible] = useState(false);
+  const [resetClicked, setResetClicked] = useState(false);
   const [transformState, setTransformState] = useState<
     null | "clockwise" | "counterclockwise" | "zoomin" | "zoomout"
   >(null);
   const [viewButtonState, setViewButtonState] = useState<
     "front" | "top" | "left" | "bird"
   >("bird");
+  const resetClickFunction = () => {};
 
   return (
     <>
@@ -43,13 +46,17 @@ export const Organize = () => {
               <NonCanvas
                 modelProps={modelProps}
                 setCloseVisible={setCloseVisible}
+                setResetVisible={setResetVisible}
+                setResetClicked={setResetClicked}
                 closeClicked={closeClicked}
+                resetClicked={resetClicked}
                 setCloseClicked={setCloseClicked}
                 transformState={transformState}
                 setTransformState={setTransformState}
                 setViewButtonState={setViewButtonState}
                 viewButtonState={viewButtonState}
                 dataMap={dataProps}
+                resetClickFunction={resetClickFunction}
               />
             </Canvas>
           </Suspense>
@@ -60,6 +67,14 @@ export const Organize = () => {
                 setCloseVisible={setCloseVisible}
               />
             )}
+            {resetVisble && (
+              <ResetButton
+                setResetClicked={setResetClicked}
+                setResetVisible={setResetVisible}
+                resetClickFunction={resetClickFunction}
+              />
+            )}
+
             <TransformationButtons
               transformState={transformState}
               setTransformState={setTransformState}

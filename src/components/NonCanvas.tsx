@@ -1,4 +1,10 @@
-import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import { ScrollControls, useScroll } from "@react-three/drei";
 import * as THREE from "three";
@@ -16,7 +22,10 @@ import useThrottle from "../optimization/useThrottle";
 interface Props {
   setCloseVisible: Dispatch<SetStateAction<boolean>>;
   setCloseClicked: Dispatch<SetStateAction<boolean>>;
+  setResetVisible: Dispatch<SetStateAction<boolean>>;
+  setResetClicked: Dispatch<SetStateAction<boolean>>;
   closeClicked: boolean;
+  resetClicked: boolean;
   transformState:
     | null
     | "clockwise"
@@ -32,18 +41,23 @@ interface Props {
   setViewButtonState: Dispatch<
     SetStateAction<"front" | "top" | "left" | "bird">
   >;
+  resetClickFunction: () => void;
   modelProps: { modelPath: string; offset: number };
   dataMap: any;
 }
 
 export const NonCanvas: React.FC<Props> = ({
   setCloseVisible,
+  setResetVisible,
+  setResetClicked,
   closeClicked,
+  resetClicked,
   setCloseClicked,
   transformState,
   setTransformState,
   viewButtonState,
   setViewButtonState,
+  resetClickFunction,
   modelProps,
   dataMap,
 }) => {
@@ -107,17 +121,22 @@ export const NonCanvas: React.FC<Props> = ({
   const originalFOV = useRef((camera as THREE.PerspectiveCamera).fov);
   const currentObject = useRef<THREE.Object3D | null>(null);
   const manualClose = useRef<boolean>(false);
-
+  const originalDataMap = useRef<any>(JSON.parse(JSON.stringify(dataMap)));
+  const columns = {};
+  Object.keys(originalDataMap.current.collections).forEach((v) => {
+    if (v.includes("SC")) {
+      //@ts-ignore
+      columns[v] =
+        originalDataMap.current.collections[
+          v as keyof typeof originalDataMap.current.collections
+        ];
+    }
+  });
   const resetCamera = () => {
     new TWEEN.Tween(camera.position)
-      .to(originalPosition.current, 500) // Set the duration of the animation in milliseconds
-      .easing(TWEEN.Easing.Quadratic.InOut) // Set the easing function for the animation
-      //   .onUpdate(() => {
-      //     camera.position.copy(startPosition);
-      //     camera.lookAt(intersects[0].point);
-      //   })
+      .to(originalPosition.current, 500)
+      .easing(TWEEN.Easing.Quadratic.InOut)
       .start();
-    //   camera.position.copy(originalPosition.current);
     new TWEEN.Tween(camera.rotation)
       .to(
         {
@@ -146,6 +165,48 @@ export const NonCanvas: React.FC<Props> = ({
       }
     }
   }, [closeClicked]);
+
+  const onResetClicked = () => {
+    Object.keys(columns).forEach((column) => {
+      const objectArray = columns[column as keyof typeof columns] as Array<any>;
+      const originalPosition =
+        originalDataMap.current.maps[
+          column as keyof typeof originalDataMap.current.maps
+        ].min;
+      objectArray.forEach((objName) => {
+        const obj = scene.getObjectByName(objName);
+        if (obj) {
+          obj.position.x = originalPosition;
+        }
+      });
+    });
+    // console.log(originalDataMap.current.maps);
+  };
+
+  // resetClickFunction = onResetClicked;
+
+  useEffect(() => {
+    if (resetClicked) {
+      Object.keys(columns).forEach((column) => {
+        const objectArray = columns[
+          column as keyof typeof columns
+        ] as Array<any>;
+        const originalPosition =
+          originalDataMap.current.maps[
+            column as keyof typeof originalDataMap.current.maps
+          ].min;
+        objectArray.forEach((objName) => {
+          const obj = scene.getObjectByName(objName);
+          if (obj) {
+            obj.position.x = originalPosition;
+          }
+        });
+      });
+      console.log(originalDataMap.current.maps);
+      dataMap = JSON.parse(JSON.stringify(originalDataMap.current)); // I mustn't do this because data will be lost on rerender
+      setResetClicked(false);
+    }
+  }, [resetClicked]);
 
   const cameraRotation = (state: "clockwise" | "counterclockwise") => {
     const cameraPosition = camera.position.clone();
@@ -417,6 +478,13 @@ export const NonCanvas: React.FC<Props> = ({
                         dataMap.maps[mapVal.right as keyof typeof dataMap.maps];
                       right.min = obj.position.x + modelProps.offset;
                     }
+                    setResetVisible((resetVisible) => {
+                      if (!resetVisible) {
+                        return true;
+                      } else {
+                        return resetVisible;
+                      }
+                    });
                   }
                 });
                 mapVal.position.x = pointIntersect;
