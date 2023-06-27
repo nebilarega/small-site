@@ -135,6 +135,8 @@ export function createBoundingBoxHelper(
         map: widthInch,
         side: THREE.DoubleSide,
         depthTest: false,
+        transparent: true,
+        color: 0xfff000,
       })
     );
     const heightPlane = new THREE.Mesh(
@@ -143,6 +145,8 @@ export function createBoundingBoxHelper(
         map: heightInch,
         side: THREE.DoubleSide,
         depthTest: false,
+        transparent: true,
+        color: 0xfff000,
       })
     );
     const breadthPlane = new THREE.Mesh(
@@ -151,6 +155,8 @@ export function createBoundingBoxHelper(
         map: breadthInch,
         side: THREE.DoubleSide,
         depthTest: false,
+        transparent: true,
+        color: 0xfff000,
       })
     );
 

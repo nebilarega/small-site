@@ -49,10 +49,10 @@ const Information: React.FC<Props> = ({ info }) => {
         <ul
           style={{ textAlign: "start", fontSize: "0.8rem", fontWeight: "500" }}
         >
-          <li>inner height: {info.generalInfo.innerHeight}in</li>
-          <li>inner depth: {info.generalInfo.innerDepth}in</li>
-          <li>inner width: {info.generalInfo.innerWidth}in</li>
-          <li>pocket sum: {info.generalInfo.pocketSum}</li>
+          <li>inner height: {info.generalInfo.innerHeight}"</li>
+          <li>inner depth: {info.generalInfo.innerDepth}"</li>
+          <li>inner width: {info.generalInfo.innerWidth}"</li>
+          <li>cell quantity: {info.generalInfo.pocketSum}</li>
         </ul>
       </div>
       {info.detailInfo.map((detailInfo, index) => {
@@ -67,7 +67,7 @@ const Information: React.FC<Props> = ({ info }) => {
                 textAlign: "start",
               }}
             >
-              Pocket in row {index + 1}
+              Cells in row {index + 1}
             </div>
             <ul
               style={{
@@ -76,11 +76,11 @@ const Information: React.FC<Props> = ({ info }) => {
                 fontWeight: "500",
               }}
             >
-              <li>height: {detailInfo.height}in</li>
-              <li>depth: {detailInfo.breadth}in</li>
-              <li>width: {detailInfo.width}in</li>
-              <li>columns sum: {detailInfo.columns}</li>
-              <li>pockets sum: {detailInfo.pockets}</li>
+              <li>height: {detailInfo.height}"</li>
+              <li>depth: {detailInfo.breadth}"</li>
+              <li>width: {detailInfo.width}"</li>
+              <li>columns quantity: {detailInfo.columns}</li>
+              <li>cells quantity: {detailInfo.pockets}</li>
             </ul>
           </div>
         );
@@ -103,8 +103,8 @@ const Information: React.FC<Props> = ({ info }) => {
           <li>height: 6.0in</li>
           <li>depth: 10.5in</li>
           <li>width: 12.0in</li>
-          <li>columns sum: 7</li>
-          <li>pockets sum: 91</li>
+          <li>columns quantity: 7</li>
+          <li>pockets quantity: 91</li>
         </ul>
       </div>
       <div>
@@ -125,8 +125,8 @@ const Information: React.FC<Props> = ({ info }) => {
           <li>height: 6.0in</li>
           <li>depth: 10.5in</li>
           <li>width: 12.0in</li>
-          <li>columns sum: 6</li>
-          <li>pockets sum: 78</li>
+          <li>columns quantity: 6</li>
+          <li>pockets quantity: 78</li>
         </ul>
       </div> */}
     </div>
