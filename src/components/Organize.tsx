@@ -56,7 +56,6 @@ export const Organize = () => {
                 setViewButtonState={setViewButtonState}
                 viewButtonState={viewButtonState}
                 dataMap={dataProps}
-                resetClickFunction={resetClickFunction}
               />
             </Canvas>
           </Suspense>
@@ -71,7 +70,6 @@ export const Organize = () => {
               <ResetButton
                 setResetClicked={setResetClicked}
                 setResetVisible={setResetVisible}
-                resetClickFunction={resetClickFunction}
               />
             )}
 

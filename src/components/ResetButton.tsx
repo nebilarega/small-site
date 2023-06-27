@@ -3,12 +3,10 @@ import React, { Dispatch, SetStateAction } from "react";
 interface ResetButtonProps {
   setResetClicked: Dispatch<SetStateAction<boolean>>;
   setResetVisible: Dispatch<SetStateAction<boolean>>;
-  resetClickFunction: () => void;
 }
 export const ResetButton: React.FC<ResetButtonProps> = ({
   setResetClicked,
   setResetVisible,
-  resetClickFunction,
 }) => {
   return (
     <div
@@ -29,7 +27,6 @@ export const ResetButton: React.FC<ResetButtonProps> = ({
         onClick={() => {
           setResetClicked(true);
           setResetVisible(false);
-          resetClickFunction();
         }}
       >
         Reset

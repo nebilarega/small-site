@@ -41,7 +41,6 @@ interface Props {
   setViewButtonState: Dispatch<
     SetStateAction<"front" | "top" | "left" | "bird">
   >;
-  resetClickFunction: () => void;
   modelProps: { modelPath: string; offset: number };
   dataMap: any;
 }
@@ -57,7 +56,6 @@ export const NonCanvas: React.FC<Props> = ({
   setTransformState,
   viewButtonState,
   setViewButtonState,
-  resetClickFunction,
   modelProps,
   dataMap,
 }) => {
@@ -166,23 +164,6 @@ export const NonCanvas: React.FC<Props> = ({
     }
   }, [closeClicked]);
 
-  const onResetClicked = () => {
-    Object.keys(columns).forEach((column) => {
-      const objectArray = columns[column as keyof typeof columns] as Array<any>;
-      const originalPosition =
-        originalDataMap.current.maps[
-          column as keyof typeof originalDataMap.current.maps
-        ].min;
-      objectArray.forEach((objName) => {
-        const obj = scene.getObjectByName(objName);
-        if (obj) {
-          obj.position.x = originalPosition;
-        }
-      });
-    });
-    // console.log(originalDataMap.current.maps);
-  };
-
   // resetClickFunction = onResetClicked;
 
   useEffect(() => {
@@ -202,7 +183,6 @@ export const NonCanvas: React.FC<Props> = ({
           }
         });
       });
-      console.log(originalDataMap.current.maps);
       dataMap = JSON.parse(JSON.stringify(originalDataMap.current)); // I mustn't do this because data will be lost on rerender
       setResetClicked(false);
     }
