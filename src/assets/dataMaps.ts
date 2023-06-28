@@ -1,32 +1,39 @@
 import {
   collections as smallCollections,
   maps as smallMaps,
+  staticMaps as smallStaticMaps,
 } from "../assets/data/smallData";
 import {
   collections as largeCollections,
   maps as largeMaps,
+  staticMaps as largeStaticMaps,
 } from "../assets/data/largeData";
 import {
   collections as extraLargeCollections,
   maps as extraLargeMaps,
+  staticMaps as extraLargeStaticMaps,
 } from "../assets/data/extraLargeData";
 import {
   collections as extraExtraLargeCollections,
   maps as extraExtraLargeMaps,
+  staticMaps as extraExtraLargeStaticMaps,
 } from "./data/extraExtraLargeData";
 import {
   collections as mediumCollections,
   maps as mediumMaps,
+  staticMaps as mediumStaticMaps,
 } from "./data/mediumData";
 import {
   collections as extraSmallCollections,
   maps as extraSmallMaps,
+  staticMaps as extraSmallStaticMaps,
 } from "./data/extraSmallData";
 
 const DataMap = new Map<string, any>();
 DataMap.set("small", {
   collections: smallCollections,
   maps: smallMaps,
+  staticMaps: smallStaticMaps,
   sizeInfo: {
     width: "/12 inches.png",
     height: "/8 inches.png",
@@ -50,6 +57,7 @@ DataMap.set("small", {
 DataMap.set("large", {
   collections: largeCollections,
   maps: largeMaps,
+  staticMaps: largeStaticMaps,
   sizeInfo: {
     width: "/15 inches.png",
     height: "/18 inches.png",
@@ -73,6 +81,7 @@ DataMap.set("large", {
 DataMap.set("extraLarge", {
   collections: extraLargeCollections,
   maps: extraLargeMaps,
+  staticMaps: extraLargeStaticMaps,
   sizeInfo: {
     width: "/18 inches.png",
     height: "/16 inches.png",
@@ -95,6 +104,7 @@ DataMap.set("extraLarge", {
 DataMap.set("extraExtraLarge", {
   collections: extraExtraLargeCollections,
   maps: extraExtraLargeMaps,
+  staticMaps: extraExtraLargeStaticMaps,
   sizeInfo: {
     width: "/24 inches.png",
     height: "/20 inches.png",
@@ -117,6 +127,7 @@ DataMap.set("extraExtraLarge", {
 DataMap.set("medium", {
   collections: mediumCollections,
   maps: mediumMaps,
+  staticMaps: mediumStaticMaps,
   sizeInfo: {
     width: "/12 inches.png",
     height: "/13 inches.png",
@@ -139,6 +150,7 @@ DataMap.set("medium", {
 DataMap.set("extraSmall", {
   collections: extraSmallCollections,
   maps: extraSmallMaps,
+  staticMpas: extraSmallStaticMaps,
   sizeInfo: {
     width: "/18 inches.png",
     height: "/8 inches.png",

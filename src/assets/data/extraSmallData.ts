@@ -271,3 +271,99 @@ export const maps = {
     max: 1,
   },
 };
+
+export const staticMaps = {
+  SC_11: {
+    left: null,
+    right: "SC_12",
+    position: { x: 0, y: 0, z: 0 },
+    min: -1,
+    max: -1,
+  },
+  SC_12: {
+    left: "SC_11",
+    right: "SC_13",
+    position: { x: 0, y: 0, z: 0 },
+    min: -0.45,
+    max: -0.45,
+  },
+  SC_13: {
+    left: "SC_12",
+    right: "SC_14",
+    position: { x: 0, y: 0, z: 0 },
+    min: 0,
+    max: 0,
+  },
+  SC_14: {
+    left: "SC_13",
+    right: null,
+    position: { x: 0, y: 0, z: 0 },
+    min: 0.45,
+    max: 1,
+  },
+
+  SC_21: {
+    left: null,
+    right: "SC_22",
+    position: { x: 0, y: 0, z: 0 },
+    min: -1,
+    max: -1,
+  },
+  SC_22: {
+    left: "SC_21",
+    right: "SC_23",
+    position: { x: 0, y: 0, z: 0 },
+    min: -0.45,
+    max: -0.45,
+  },
+  SC_23: {
+    left: "SC_22",
+    right: "SC_24",
+    position: { x: 0, y: 0, z: 0 },
+    min: 0,
+    max: 0,
+  },
+  SC_24: {
+    left: "SC_23",
+    right: null,
+    position: { x: 0, y: 0, z: 0 },
+    min: 0.45,
+    max: 1,
+  },
+
+  SC_31: {
+    left: null,
+    right: "SC_32",
+    position: { x: 0, y: 0, z: 0 },
+    min: -1,
+    max: -1,
+  },
+  SC_32: {
+    left: "SC_31",
+    right: "SC_33",
+    position: { x: 0, y: 0, z: 0 },
+    min: -0.45,
+    max: -0.45,
+  },
+  SC_33: {
+    left: "SC_32",
+    right: "SC_34",
+    position: { x: 0, y: 0, z: 0 },
+    min: 0,
+    max: 0,
+  },
+  SC_34: {
+    left: "SC_33",
+    right: "SC_35",
+    position: { x: 0, y: 0, z: 0 },
+    min: 0.45,
+    max: 0.45,
+  },
+  SC_35: {
+    left: "SC_34",
+    right: null,
+    position: { x: 0, y: 0, z: 0 },
+    min: 1,
+    max: 1,
+  },
+};

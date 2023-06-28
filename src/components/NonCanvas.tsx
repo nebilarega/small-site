@@ -173,8 +173,8 @@ export const NonCanvas: React.FC<Props> = ({
           column as keyof typeof columns
         ] as Array<any>;
         const originalPosition =
-          originalDataMap.current.maps[
-            column as keyof typeof originalDataMap.current.maps
+          originalDataMap.current.staticMaps[
+            column as keyof typeof originalDataMap.current.staticMaps
           ].min;
         objectArray.forEach((objName) => {
           const obj = scene.getObjectByName(objName);

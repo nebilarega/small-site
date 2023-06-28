@@ -1,6 +1,6 @@
 export const collections = {
   Collection: ["Stand", "Barb"],
-  "Collection.001": ["SC_11_1", "SC_11_2", "SC_11_3", "SC_11_4", "SC_11_5"],
+  "Collection.001": ["SC_11_1", "SC_11_2", "SC_11_3", "SC_11_4"],
   S1: [],
   S2: [],
   S3: [],
@@ -12,14 +12,76 @@ export const collections = {
   SC_22: ["SROL_22", "SC_22_1", "SC_22_2", "SC_22_3", "SC_22_4", "SC_22_5"],
   SC_23: ["SROL_23", "SC_23_2", "SC_23_1", "SC_23_3", "SC_23_4", "SC_23_5"],
   SC_24: ["SROL_24", "SC_24_1", "SC_24_2", "SC_24_3", "SC_24_4", "SC_24_5"],
-  SC_31: ["SROL_31", "SC_31_1", "SC_31_2", "SC_31_3", "SC_31_4", "SC_31_5"],
-  SC_32: ["SROL_32", "SC_32_1", "SC_32_2", "SC_32_3", "SC_32_4", "SC_32_5"],
-  SC_33: ["SROL_33", "SC_33_1", "SC_33_2", "SC_33_3", "SC_33_4", "SC_33_5"],
-  SC_34: ["SROL_34", "SC_34_1", "SC_34_2", "SC_34_3", "SC_34_4", "SC_34_5"],
-  SC_35: ["SROL_35", "SC_35_1", "SC_35_2", "SC_35_3", "SC_35_4", "SC_35_5"],
+  SC_25: ["SROL_25", "SC_25_1", "SC_25_2", "SC_25_3", "SC_25_4", "SC_25_5"],
 };
 
 export const maps = {
+  SC_11: {
+    left: null,
+    right: "SC_12",
+    position: { x: 0, y: 0, z: 0 },
+    min: -0.985,
+    max: -0.985,
+  },
+  SC_12: {
+    left: "SC_11",
+    right: "SC_13",
+    position: { x: 0, y: 0, z: 0 },
+    min: -0.5,
+    max: -0.5,
+  },
+  SC_13: {
+    left: "SC_12",
+    right: "SC_14",
+    position: { x: 0, y: 0, z: 0 },
+    min: 0,
+    max: 0,
+  },
+  SC_14: {
+    left: "SC_13",
+    right: null,
+    position: { x: 0, y: 0, z: 0 },
+    min: 0.484,
+    max: 1,
+  },
+  SC_21: {
+    left: null,
+    right: "SC_22",
+    position: { x: 0, y: 0, z: 0 },
+    min: -0.985,
+    max: -0.985,
+  },
+  SC_22: {
+    left: "SC_21",
+    right: "SC_23",
+    position: { x: 0, y: 0, z: 0 },
+    min: -0.5,
+    max: -0.5,
+  },
+  SC_23: {
+    left: "SC_22",
+    right: "SC_22",
+    position: { x: 0, y: 0, z: 0 },
+    min: 0,
+    max: 0,
+  },
+  SC_24: {
+    left: "SC_23",
+    right: "SC_25",
+    position: { x: 0, y: 0, z: 0 },
+    min: 0.484,
+    max: 0.484,
+  },
+  SC_25: {
+    left: "SC_24",
+    right: null,
+    position: { x: 0, y: 0, z: 0 },
+    min: 1,
+    max: 1,
+  },
+};
+
+export const staticMaps = {
   SC_11: {
     left: null,
     right: "SC_12",
