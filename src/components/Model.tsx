@@ -28,7 +28,11 @@ export const Model: React.FC<ModelProps> = ({ modelPath, modelType }) => {
   else if (modelType === "large") {
     gltf.scene.position.y = -0.65;
     gltf.scene.position.z = 0.5;
-  } else if (modelType === "extraLarge" || modelType === "medium") {
+  } else if (
+    modelType === "extraLarge" ||
+    modelType === "medium" ||
+    modelType === "extraSmall"
+  ) {
     gltf.scene.position.z = 0.5;
   }
   return (
