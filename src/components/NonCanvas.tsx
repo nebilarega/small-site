@@ -183,7 +183,9 @@ export const NonCanvas: React.FC<Props> = ({
           }
         });
       });
-      dataMap = JSON.parse(JSON.stringify(originalDataMap.current)); // I mustn't do this because data will be lost on rerender
+      dataMap.maps = JSON.parse(
+        JSON.stringify(originalDataMap.current.staticMaps)
+      ); // I mustn't do this because data will be lost on rerender
       setResetClicked(false);
     }
   }, [resetClicked]);
