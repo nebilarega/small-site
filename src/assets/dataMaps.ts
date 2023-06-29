@@ -150,7 +150,7 @@ DataMap.set("medium", {
 DataMap.set("extraSmall", {
   collections: extraSmallCollections,
   maps: extraSmallMaps,
-  staticMpas: extraSmallStaticMaps,
+  staticMaps: extraSmallStaticMaps,
   sizeInfo: {
     width: "/18 inches.png",
     height: "/8 inches.png",

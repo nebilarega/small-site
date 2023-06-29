@@ -26,7 +26,7 @@ ModelMap.set("medium", {
 });
 ModelMap.set("extraSmall", {
   modelPath: "/models/RExtraSmall.glb",
-  offset: 0.47,
+  offset: 0.46,
 });
 
 export default ModelMap;

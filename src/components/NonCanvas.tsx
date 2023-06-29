@@ -168,7 +168,7 @@ export const NonCanvas: React.FC<Props> = ({
 
   useEffect(() => {
     if (resetClicked) {
-      Object.keys(columns).forEach((column) => {
+      Object.keys(columns).forEach((column, index) => {
         const objectArray = columns[
           column as keyof typeof columns
         ] as Array<any>;
