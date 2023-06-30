@@ -1,0 +1,22 @@
+@font-face {
+  font-family: "UNEXFont";
+  src: url("../public/fonts/Lato-Bold.ttf");
+}
+
+body {
+  font-family: UNEXFont, "sans-serif";
+}
+
+.container_2 {
+  position: absolute;
+  left: 5%;
+  top: 8%;
+}
+.button_info {
+  font-size: 1rem;
+  font-family: UNEXFont, "sans-serif";
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 20px 8px 20px;
+}

@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
+import "../resetButton.css";
 
 interface ResetButtonProps {
   setResetClicked: Dispatch<SetStateAction<boolean>>;
@@ -11,21 +12,9 @@ export const ResetButton: React.FC<ResetButtonProps> = ({
   setCloseClicked,
 }) => {
   return (
-    <div
-      style={{
-        position: "absolute",
-        left: "5%",
-        top: "8%",
-      }}
-    >
+    <div className="container_2">
       <button
-        style={{
-          fontSize: "1rem",
-          outline: "none",
-          border: "none",
-          cursor: "pointer",
-          padding: "8px 20px 8px 20px",
-        }}
+        className="button_info"
         onClick={() => {
           setResetClicked(true);
           setResetVisible(false);
