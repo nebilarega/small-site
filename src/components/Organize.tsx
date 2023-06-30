@@ -60,15 +60,16 @@ export const Organize = () => {
             </Canvas>
           </Suspense>
           <div>
-            {closeVisible && (
+            {/* {closeVisible && (
               <CloseButton
                 setCloseClicked={setCloseClicked}
                 setCloseVisible={setCloseVisible}
               />
-            )}
+            )} */}
             {resetVisble && (
               <ResetButton
                 setResetClicked={setResetClicked}
+                setCloseClicked={setCloseClicked}
                 setResetVisible={setResetVisible}
               />
             )}

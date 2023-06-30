@@ -235,6 +235,7 @@ export const NonCanvas: React.FC<Props> = ({
   useEffect(() => {
     if (viewButtonState) {
       setCloseVisible(false);
+      setResetVisible(false);
       if (manualClose.current) {
         manualClose.current = !manualClose.current;
       }
@@ -336,6 +337,7 @@ export const NonCanvas: React.FC<Props> = ({
             if (manualClose.current) {
               setCloseClicked(true);
               setCloseVisible(false);
+              setResetVisible(false);
             } else {
               createBoundingBoxHelper(
                 int_obj.parent,
@@ -370,6 +372,7 @@ export const NonCanvas: React.FC<Props> = ({
               (camera as THREE.PerspectiveCamera).fov = 25;
               // camera.position.set(-1, 1, 3);
               setCloseVisible(true);
+              setResetVisible(true);
               camera.updateProjectionMatrix();
             }
             manualClose.current = !manualClose.current;
