@@ -5,7 +5,7 @@ const Fallback = () => {
   return (
     <div id="content__container" className="content__container">
       <div className="logo">
-        <img src="/unexfav.webp" alt="logo" />
+        <img src="/unexfav.png" alt="logo" />
       </div>
       <div className="content">
         <div className="ball red"></div>
