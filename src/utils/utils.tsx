@@ -135,7 +135,6 @@ export function createBoundingBoxHelper(
         map: widthInch,
         side: THREE.DoubleSide,
         depthTest: false,
-        color: 0x00fff0,
         transparent: true,
       })
     );
@@ -145,7 +144,6 @@ export function createBoundingBoxHelper(
         map: heightInch,
         side: THREE.DoubleSide,
         depthTest: false,
-        color: 0x00fff0,
         transparent: true,
       })
     );
@@ -155,7 +153,6 @@ export function createBoundingBoxHelper(
         map: breadthInch,
         side: THREE.DoubleSide,
         depthTest: false,
-        color: 0x00fff0,
         transparent: true,
       })
     );
@@ -185,9 +182,32 @@ export function createBoundingBoxHelper(
     breadthPlane.position.copy(breadthPosition);
     breadthPlane.rotateY(-Math.PI / 2);
 
+    const coneArrowGeometry = new THREE.ConeGeometry(0.008, 0.04, 16);
+    const coneMaterial = new THREE.MeshStandardMaterial({
+      color: 0xff0000,
+      depthTest: false,
+    });
+    const widthCone = new THREE.Mesh(coneArrowGeometry.clone(), coneMaterial);
+    widthCone.rotation.z = -Math.PI / 2;
+    widthCone.position.copy(vertices[3]);
+
+    const breadthCone = new THREE.Mesh(coneArrowGeometry.clone(), coneMaterial);
+    breadthCone.rotation.x = Math.PI / 2;
+    breadthCone.position.copy(vertices[2]);
+
+    const heightCone = new THREE.Mesh(coneArrowGeometry.clone(), coneMaterial);
+    heightCone.position.copy(vertices[5]);
+
     const infoGroup = new THREE.Group();
     infoGroup.name = "informationGroup";
-    infoGroup.add(widthPlane, heightPlane, breadthPlane);
+    infoGroup.add(
+      widthPlane,
+      heightPlane,
+      breadthPlane,
+      widthCone,
+      breadthCone,
+      heightCone
+    );
     scene.add(infoGroup);
   }
   const top = [
