@@ -131,28 +131,31 @@ export function createBoundingBoxHelper(
 
     const widthPlane = new THREE.Mesh(
       planeGeometry.clone(),
-      new THREE.MeshStandardMaterial({
+      new THREE.MeshPhongMaterial({
         map: widthInch,
         side: THREE.DoubleSide,
         depthTest: false,
+        color: 0x00fff0,
         transparent: true,
       })
     );
     const heightPlane = new THREE.Mesh(
       planeGeometry.clone(),
-      new THREE.MeshStandardMaterial({
+      new THREE.MeshPhongMaterial({
         map: heightInch,
         side: THREE.DoubleSide,
         depthTest: false,
+        color: 0x00fff0,
         transparent: true,
       })
     );
     const breadthPlane = new THREE.Mesh(
       planeGeometry.clone(),
-      new THREE.MeshStandardMaterial({
+      new THREE.MeshPhongMaterial({
         map: breadthInch,
         side: THREE.DoubleSide,
         depthTest: false,
+        color: 0x00fff0,
         transparent: true,
       })
     );
