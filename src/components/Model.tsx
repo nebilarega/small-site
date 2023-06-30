@@ -13,20 +13,20 @@ export const Model: React.FC<ModelProps> = ({ modelPath, modelType }) => {
   gltf.scene.traverse((child) => {
     if (child instanceof THREE.Mesh) {
       child.castShadow = true;
-      child.receiveShadow = true;
+      // child.receiveShadow = true;
     }
   });
   // gltf.scene.position.z = 0.5;
   gltf.scene.position.y = -0.7;
   if (modelType === "extraExtraLarge") {
-    gltf.scene.position.y = -1.1;
+    gltf.scene.position.y = -1.4;
   } else if (modelType === "small") {
     gltf.scene.position.z = 0.5;
   }
   // else if (modelType === "extraExtraLarge") {
   //   gltf.scene.position.y = -0.4;
   else if (modelType === "large") {
-    gltf.scene.position.y = -0.65;
+    gltf.scene.position.y = -0.95;
     gltf.scene.position.z = 0.5;
   } else if (
     modelType === "extraLarge" ||
@@ -34,6 +34,9 @@ export const Model: React.FC<ModelProps> = ({ modelPath, modelType }) => {
     modelType === "extraSmall"
   ) {
     gltf.scene.position.z = 0.5;
+  }
+  if (modelType === "extraLarge") {
+    gltf.scene.position.y = -0.8;
   }
   return (
     <mesh castShadow receiveShadow>
