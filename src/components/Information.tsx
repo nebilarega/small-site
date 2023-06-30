@@ -49,10 +49,10 @@ const Information: React.FC<Props> = ({ info }) => {
         <ul
           style={{ textAlign: "start", fontSize: "0.8rem", fontWeight: "500" }}
         >
-          <li>inner height: {info.generalInfo.innerHeight}"</li>
-          <li>inner depth: {info.generalInfo.innerDepth}"</li>
-          <li>inner width: {info.generalInfo.innerWidth}"</li>
-          <li>cell quantity: {info.generalInfo.pocketSum}</li>
+          <li>Inner Height: {info.generalInfo.innerHeight}"</li>
+          <li>Inner Depth: {info.generalInfo.innerDepth}"</li>
+          <li>Inner Width: {info.generalInfo.innerWidth}"</li>
+          <li>Cell Quantity: {info.generalInfo.pocketSum}</li>
         </ul>
       </div>
       {info.detailInfo.map((detailInfo, index) => {
@@ -67,7 +67,7 @@ const Information: React.FC<Props> = ({ info }) => {
                 textAlign: "start",
               }}
             >
-              Cells in row {index + 1}
+              Cells In Row {index + 1}
             </div>
             <ul
               style={{
@@ -76,11 +76,11 @@ const Information: React.FC<Props> = ({ info }) => {
                 fontWeight: "500",
               }}
             >
-              <li>height: {detailInfo.height}"</li>
-              <li>depth: {detailInfo.breadth}"</li>
-              <li>width: {detailInfo.width}"</li>
-              <li>columns quantity: {detailInfo.columns}</li>
-              <li>cells quantity: {detailInfo.pockets}</li>
+              <li>Height: {detailInfo.height}"</li>
+              <li>Depth: {detailInfo.breadth}"</li>
+              <li>Width: {detailInfo.width}"</li>
+              <li>Columns Quantity: {detailInfo.columns}</li>
+              <li>Cells Quantity: {detailInfo.pockets}</li>
             </ul>
           </div>
         );
