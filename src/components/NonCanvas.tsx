@@ -330,6 +330,7 @@ export const NonCanvas: React.FC<Props> = ({
           !int_obj.name.includes("SROL")
         ) {
           if (
+            int_obj.name !== "arrowHelper" &&
             int_obj.parent &&
             int_obj.parent.name !== "Scene" &&
             int_obj.parent.type !== "Scene"

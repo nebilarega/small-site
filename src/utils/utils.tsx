@@ -127,7 +127,7 @@ export function createBoundingBoxHelper(
     const heightInch = textureLoader.load(dataMap.sizeInfo.height);
     const breadthInch = textureLoader.load(dataMap.sizeInfo.breadth);
 
-    const planeGeometry = new THREE.PlaneGeometry(0.3, 0.08);
+    const planeGeometry = new THREE.PlaneGeometry(0.2, 0.06);
 
     const widthPlane = new THREE.Mesh(
       planeGeometry.clone(),
