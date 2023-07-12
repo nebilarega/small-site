@@ -127,7 +127,7 @@ export function createBoundingBoxHelper(
     const heightInch = textureLoader.load(dataMap.sizeInfo.height);
     const breadthInch = textureLoader.load(dataMap.sizeInfo.breadth);
 
-    const planeGeometry = new THREE.PlaneGeometry(0.2, 0.06);
+    const planeGeometry = new THREE.PlaneGeometry(0.16, 0.05);
 
     const widthPlane = new THREE.Mesh(
       planeGeometry.clone(),
@@ -173,41 +173,21 @@ export function createBoundingBoxHelper(
       .add(new THREE.Vector3(0, 0.08 / 2, 0));
     const heightPosition = new THREE.Vector3();
     heightPosition.copy(
-      new THREE.Vector3(boxCenter.x, boxCenter.y + 0.05, boxCenter.z)
+      new THREE.Vector3(vertices[1].x, boxCenter.y, vertices[1].z)
     );
 
     widthPlane.position.copy(widthPosition);
     heightPlane.position.copy(heightPosition);
-    heightPlane.rotateY(-Math.PI / 4);
+    // heightPlane.rotateY(-Math.PI / 4);
+    const axis = heightPlane.getWorldDirection(new THREE.Vector3()).normalize();
+
+    heightPlane.rotateOnAxis(axis, Math.PI / 2);
     breadthPlane.position.copy(breadthPosition);
     breadthPlane.rotateY(-Math.PI / 2);
 
-    const coneArrowGeometry = new THREE.ConeGeometry(0.008, 0.04, 16);
-    const coneMaterial = new THREE.MeshStandardMaterial({
-      color: 0xff0000,
-      depthTest: false,
-    });
-    const widthCone = new THREE.Mesh(coneArrowGeometry.clone(), coneMaterial);
-    widthCone.rotation.z = -Math.PI / 2;
-    widthCone.position.copy(vertices[3]);
-
-    const breadthCone = new THREE.Mesh(coneArrowGeometry.clone(), coneMaterial);
-    breadthCone.rotation.x = Math.PI / 2;
-    breadthCone.position.copy(vertices[2]);
-
-    const heightCone = new THREE.Mesh(coneArrowGeometry.clone(), coneMaterial);
-    heightCone.position.copy(vertices[5]);
-
     const infoGroup = new THREE.Group();
     infoGroup.name = "informationGroup";
-    infoGroup.add(
-      widthPlane,
-      heightPlane,
-      breadthPlane,
-      widthCone,
-      breadthCone,
-      heightCone
-    );
+    infoGroup.add(widthPlane, heightPlane, breadthPlane);
     scene.add(infoGroup);
   }
   const top = [

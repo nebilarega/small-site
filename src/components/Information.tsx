@@ -28,7 +28,7 @@ const Information: React.FC<Props> = ({ info }) => {
         position: "absolute",
         top: "15%",
         right: "1%",
-        backgroundColor: "white",
+        backgroundColor: "rgba(255, 255, 255, 0.5)",
         padding: "0.5rem 0.8rem 0.5rem 0",
         boxShadow: "0 0 3x #ccc",
         borderRadius: "10px",

@@ -44,7 +44,7 @@ export const ViewButtons: React.FC<ViewButtonsStates> = ({
             setViewButtonState("bird");
           }}
         >
-          BIRD VIEW
+          RIGHT VIEW
         </div>
       </div>
     </div>

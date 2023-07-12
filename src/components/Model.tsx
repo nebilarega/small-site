@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import * as THREE from "three";
 import { useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
@@ -6,10 +6,21 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 interface ModelProps {
   modelPath: string;
   modelType: string;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
-export const Model: React.FC<ModelProps> = ({ modelPath, modelType }) => {
+export const Model: React.FC<ModelProps> = ({
+  modelPath,
+  modelType,
+  setIsLoading,
+}) => {
+  useEffect(() => {
+    setIsLoading(true); // Reset the loading state on component mount
+  }, []);
   //@ts-ignore
   const gltf = useLoader(GLTFLoader, modelPath);
+  useEffect(() => {
+    setIsLoading(false); // Reset the loading state on component mount
+  }, [gltf]);
   gltf.scene.traverse((child) => {
     if (child instanceof THREE.Mesh) {
       child.castShadow = true;

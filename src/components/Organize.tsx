@@ -27,7 +27,7 @@ export const Organize = () => {
   const [viewButtonState, setViewButtonState] = useState<
     "front" | "top" | "left" | "bird"
   >("bird");
-  const resetClickFunction = () => {};
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <>
@@ -37,10 +37,11 @@ export const Organize = () => {
           <Suspense fallback={<Fallback />}>
             <Canvas shadows={true}>
               <fog attach="fog" args={["#ffffff", 0, 20]} />
-              <ambientLight args={[0xffffff, 0.1]} />
+              <ambientLight args={[0xffffff, 1]} />
               <Model
                 modelPath={modelProps.modelPath}
                 modelType={id as string}
+                setIsLoading={setIsLoading}
               />
               {/* <gridHelper args={[100, 1000]} position={[0, -0.5, 0]} /> */}
               <NonCanvas
@@ -58,32 +59,28 @@ export const Organize = () => {
                 dataMap={dataProps}
               />
             </Canvas>
-          </Suspense>
-          <div>
-            {/* {closeVisible && (
-              <CloseButton
-                setCloseClicked={setCloseClicked}
-                setCloseVisible={setCloseVisible}
-              />
-            )} */}
-            {resetVisble && (
-              <ResetButton
-                setResetClicked={setResetClicked}
-                setCloseClicked={setCloseClicked}
-                setResetVisible={setResetVisible}
-              />
-            )}
+            {!isLoading ? (
+              <div>
+                {resetVisble && (
+                  <ResetButton
+                    setResetClicked={setResetClicked}
+                    setCloseClicked={setCloseClicked}
+                    setResetVisible={setResetVisible}
+                  />
+                )}
 
-            <TransformationButtons
-              transformState={transformState}
-              setTransformState={setTransformState}
-            />
-            <ViewButtons
-              viewButtonState={viewButtonState}
-              setViewButtonState={setViewButtonState}
-            />
-            <Information info={dataProps.info} />
-          </div>
+                <TransformationButtons
+                  transformState={transformState}
+                  setTransformState={setTransformState}
+                />
+                <ViewButtons
+                  viewButtonState={viewButtonState}
+                  setViewButtonState={setViewButtonState}
+                />
+                <Information info={dataProps.info} />
+              </div>
+            ) : null}
+          </Suspense>
         </div>
       )}
     </>

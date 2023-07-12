@@ -9,16 +9,20 @@ body {
 
 .container_2 {
   position: absolute;
+  /* background-color: rgba(245, 126, 32, 1); */
   left: 5%;
   top: 8%;
 }
 .button_info {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-family: UNEXFont, "sans-serif";
+  background-color: rgba(245, 126, 32, 1);
   outline: none;
   border: none;
   cursor: pointer;
   padding: 8px 20px 8px 20px;
+  transition: all 200ms ease-in-out;
+  border-radius: 0.4rem;
 }
 
 .button_info:hover {

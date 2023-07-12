@@ -21,7 +21,7 @@ export const ResetButton: React.FC<ResetButtonProps> = ({
           setCloseClicked(true);
         }}
       >
-        Reset
+        RESET
       </button>
     </div>
   );

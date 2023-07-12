@@ -289,6 +289,20 @@ export const NonCanvas: React.FC<Props> = ({
             .start();
           break;
         case "bird":
+          resetCamera();
+          new TWEEN.Tween(camera.position)
+            .to(new THREE.Vector3(3.7, 0, 0), 1000) // Set the duration of the animation in milliseconds
+            .easing(TWEEN.Easing.Quadratic.InOut) // Set the easing function for the animation
+            //   .onUpdate(() => {
+            //     camera.position.copy(startPosition);
+            //     camera.lookAt(intersects[0].point);
+            //   })
+            .start();
+          new TWEEN.Tween(camera.rotation)
+            .to({ x: 0, y: Math.PI / 2, z: 0 }, 1000)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .start();
+          break;
         default:
           new TWEEN.Tween(camera.position)
             .to(originalPosition.current, 1000) // Set the duration of the animation in milliseconds
