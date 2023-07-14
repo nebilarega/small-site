@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction } from "react";
 import "../viewButtons.css";
 interface ViewButtonsStates {
-  viewButtonState: "front" | "top" | "left" | "bird";
+  viewButtonState: "front" | "top" | "left" | "bird" | "default";
   setViewButtonState: Dispatch<
-    SetStateAction<"front" | "top" | "left" | "bird">
+    SetStateAction<"front" | "top" | "left" | "bird" | "default">
   >;
 }
 

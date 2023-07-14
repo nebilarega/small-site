@@ -25,8 +25,8 @@ export const Organize = () => {
     null | "clockwise" | "counterclockwise" | "zoomin" | "zoomout"
   >(null);
   const [viewButtonState, setViewButtonState] = useState<
-    "front" | "top" | "left" | "bird"
-  >("bird");
+    "front" | "top" | "left" | "bird" | "default"
+  >("default");
   const [isLoading, setIsLoading] = useState(true);
 
   return (

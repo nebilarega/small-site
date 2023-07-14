@@ -37,9 +37,9 @@ interface Props {
       null | "clockwise" | "counterclockwise" | "zoomin" | "zoomout"
     >
   >;
-  viewButtonState: "front" | "top" | "left" | "bird";
+  viewButtonState: "front" | "top" | "left" | "bird" | "default";
   setViewButtonState: Dispatch<
-    SetStateAction<"front" | "top" | "left" | "bird">
+    SetStateAction<"front" | "top" | "left" | "bird" | "default">
   >;
   modelProps: { modelPath: string; offset: number };
   dataMap: any;
@@ -291,12 +291,8 @@ export const NonCanvas: React.FC<Props> = ({
         case "bird":
           resetCamera();
           new TWEEN.Tween(camera.position)
-            .to(new THREE.Vector3(3.7, 0, 0), 1000) // Set the duration of the animation in milliseconds
-            .easing(TWEEN.Easing.Quadratic.InOut) // Set the easing function for the animation
-            //   .onUpdate(() => {
-            //     camera.position.copy(startPosition);
-            //     camera.lookAt(intersects[0].point);
-            //   })
+            .to(new THREE.Vector3(3.7, 0, 0), 1000)
+            .easing(TWEEN.Easing.Quadratic.InOut)
             .start();
           new TWEEN.Tween(camera.rotation)
             .to({ x: 0, y: Math.PI / 2, z: 0 }, 1000)
@@ -305,14 +301,9 @@ export const NonCanvas: React.FC<Props> = ({
           break;
         default:
           new TWEEN.Tween(camera.position)
-            .to(originalPosition.current, 1000) // Set the duration of the animation in milliseconds
-            .easing(TWEEN.Easing.Quadratic.InOut) // Set the easing function for the animation
-            //   .onUpdate(() => {
-            //     camera.position.copy(startPosition);
-            //     camera.lookAt(intersects[0].point);
-            //   })
+            .to(originalPosition.current, 1000)
+            .easing(TWEEN.Easing.Quadratic.InOut)
             .start();
-          //   camera.position.copy(originalPosition.current);
           new TWEEN.Tween(camera.rotation)
             .to(
               {
