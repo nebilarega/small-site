@@ -37,7 +37,7 @@ export const Organize = () => {
           <Suspense fallback={<Fallback />}>
             <Canvas shadows={true}>
               <fog attach="fog" args={["#ffffff", 0, 20]} />
-              <ambientLight args={[0xffffff, 1]} />
+              <ambientLight args={[0xffffff, 0.7]} />
               <Model
                 modelPath={modelProps.modelPath}
                 modelType={id as string}
